@@ -10,7 +10,7 @@ import java.util.List;
 import net.ictcampus.RunFun.Player;
 import net.ictcampus.RunFun.domain.ConnectionFactory;
 
-public class RunFunJBDCDao {
+public class RunFunJBDCDao implements RunFunDao{
 
     private Connection con = null;
     private PreparedStatement ps = null;
@@ -33,7 +33,7 @@ public class RunFunJBDCDao {
         rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("ID_Person");
-            all.add(new Player(rs.getString("name"), rs.getString("prename"), rs.getInt("birthyear"), rs.getInt("credit")));
+            all.add(new Player(rs.getString("name"), rs.getInt("geschwindigkeit"), rs.getString("item"), rs.getInt("score")));
         }
         closeConnection();
         } catch (SQLException e) {
