@@ -1,4 +1,4 @@
-package net.ictcampus.RunFun;
+package net.ictcampus.RunFun.domain;
 
 public class ConnectionFactory {
 
