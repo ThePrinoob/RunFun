@@ -23,8 +23,15 @@ public class ViewManager {
     private Stage mainStage;
     private Scene mainScene;
     
-    
+   
+    private RunFunSubScene highscoreSubScene;
+    private RunFunSubScene characterChooserScene;
     private RunFunSubScene creditsSubScene;
+    
+    private RunFunSubScene sceneToHide;
+    
+    
+    //private RunFunSubScene creditsSubScene;
 
     List<RunFunButton> menuButtons;
 
@@ -40,9 +47,24 @@ public class ViewManager {
         
         
     }
+    private void showSubScene(RunFunSubScene subScene) {
+        if(sceneToHide != null) {
+            sceneToHide.moveSubScene();
+        }
+        subScene.moveSubScene();
+        sceneToHide = subScene;
+    }
     private void createSubScenes() {
+        
+        highscoreSubScene = new RunFunSubScene();
+        mainPane.getChildren().add(highscoreSubScene);
+        
+        characterChooserScene = new RunFunSubScene();
+        mainPane.getChildren().add(characterChooserScene);
+        
         creditsSubScene = new RunFunSubScene();
         mainPane.getChildren().add(creditsSubScene);
+        
     }
 
     public Stage getMainStage() {
@@ -59,7 +81,7 @@ public class ViewManager {
     private void createButtons() {
         createStartButton();
         createScoreButton();
-        createHelpButton();
+        //createHelpButton();
         createCreditsButton();
         createExitButton();
     }
@@ -68,19 +90,32 @@ public class ViewManager {
         RunFunButton startButton = new RunFunButton("PLAY");
         addMenuButton(startButton);
 
+        startButton.setOnAction(new EventHandler<ActionEvent>() {
+            
+
+            @Override
+            public void handle(ActionEvent event) {
+                   showSubScene(characterChooserScene);
+        }});
     }
 
     private void createScoreButton() {
         RunFunButton highscoreButton = new RunFunButton("HIGHSCORE");
         addMenuButton(highscoreButton);
+        highscoreButton.setOnAction(new EventHandler<ActionEvent>() {
+            
 
+            @Override
+            public void handle(ActionEvent event) {
+                   showSubScene(highscoreSubScene);
+        }});
     }
 
-    private void createHelpButton() {
-        RunFunButton helpButton = new RunFunButton("HELP");
-        addMenuButton((helpButton));
-
-    }
+//    private void createHelpButton() {
+//        RunFunButton helpButton = new RunFunButton("HELP");
+//        addMenuButton((helpButton));
+//
+//    }
 
     private void createCreditsButton() {
         RunFunButton creditsButton = new RunFunButton("CREDITS");
@@ -91,7 +126,7 @@ public class ViewManager {
 
             @Override
             public void handle(ActionEvent event) {
-                   creditsSubScene.moveSubScene();
+                   showSubScene(creditsSubScene);
         }});
     }
 
@@ -99,7 +134,15 @@ public class ViewManager {
         RunFunButton exitButton = new RunFunButton("EXIT");
         addMenuButton(exitButton);
 
-        exitButton.setOnAction(event -> mainStage.close());
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                // TODO Auto-generated method stub
+                mainStage.close();
+            }
+            
+        });
     }
 
     private void createBackground() {
