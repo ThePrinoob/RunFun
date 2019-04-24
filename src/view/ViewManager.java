@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
+import javafx.event.*;
 import model.RunFunButton;
 import model.RunFunSubScene;
 
@@ -21,6 +22,9 @@ public class ViewManager {
     private AnchorPane mainPane;
     private Stage mainStage;
     private Scene mainScene;
+    
+    
+    private RunFunSubScene creditsSubScene;
 
     List<RunFunButton> menuButtons;
 
@@ -30,14 +34,15 @@ public class ViewManager {
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
+        createSubScenes();
         createButtons();
         createBackground();
         
-        RunFunSubScene subScene = new RunFunSubScene();
         
-        subScene.setLayoutX(200);
-        subScene.setLayoutX(100);
-        mainPane.getChildren().add(subScene);
+    }
+    private void createSubScenes() {
+        creditsSubScene = new RunFunSubScene();
+        mainPane.getChildren().add(creditsSubScene);
     }
 
     public Stage getMainStage() {
@@ -80,7 +85,14 @@ public class ViewManager {
     private void createCreditsButton() {
         RunFunButton creditsButton = new RunFunButton("CREDITS");
         addMenuButton(creditsButton);
+        
+        creditsButton.setOnAction(new EventHandler<ActionEvent>() {
+        
 
+            @Override
+            public void handle(ActionEvent event) {
+                   creditsSubScene.moveSubScene();
+        }});
     }
 
     private void createExitButton() {

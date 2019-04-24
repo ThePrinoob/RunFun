@@ -1,5 +1,6 @@
 package model;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -7,6 +8,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
+import javafx.util.Duration;
 
 public class RunFunSubScene extends SubScene {
 
@@ -15,6 +17,9 @@ public class RunFunSubScene extends SubScene {
 
 //    private boolean isHidden;
 
+    
+    private boolean isHidden;
+    
     public RunFunSubScene() {
         super(new AnchorPane(), 600, 400);
         prefWidth(600);
@@ -26,12 +31,33 @@ public class RunFunSubScene extends SubScene {
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
         root2.setBackground(new Background(image));
+        
+        isHidden = true;
+        setLayoutX(1024);
+        setLayoutY(180);
 //
 //        isHidden = true;
 //
 //        setLayoutX(1024);
 //        setLayoutY(180);
 
+    }
+    
+    public void moveSubScene() {
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(0.4));
+        transition.setNode(this);
+        
+        if(isHidden) {
+        transition.setToX(-676);
+        isHidden = false;
+        } else {
+            transition.setToX(0);;
+            isHidden = true;
+        }
+       
+        transition.play();
+        
     }
 
 //    public void moveSubScene() {
