@@ -5,9 +5,7 @@ import java.util.List;
 import net.ictcampus.RunFun.Player;
 
 public interface RunFunDao {
-    public List<Player> findAllPlayers();
-
-    public Player findhighscoreByName(String name);
+    public List<highscore> findhighestscore();
 }
 
 

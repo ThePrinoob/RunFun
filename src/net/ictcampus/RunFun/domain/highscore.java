@@ -4,13 +4,13 @@ import java.sql.Time;
 
 public class highscore {
 
-    private String name;
+    private String username;
     private Time time;
-    private int mapid;
-    private String mapname;
-    
-    public highscore(String name, Time time, int mapid, String mapname) {
-        
-        
+    private String name;
+
+    public highscore(String username, Time time, String name) {
+        this.username = username;
+        this.time = time;
+        this.name = name;
     }
 }
