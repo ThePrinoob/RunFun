@@ -54,7 +54,7 @@ public class RunFunJBDCDao implements RunFunDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return all;
+//        return all;
     }
 
     private Connection openConnection() throws SQLException {
