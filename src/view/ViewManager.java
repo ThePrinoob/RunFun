@@ -5,13 +5,18 @@ import java.util.List;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.event.*;
+import model.CHARACTER;
+import model.CharacterPicker;
+import model.InfoLabel;
 import model.RunFunButton;
 import model.RunFunSubScene;
 
@@ -22,18 +27,19 @@ public class ViewManager {
     private AnchorPane mainPane;
     private Stage mainStage;
     private Scene mainScene;
-    
-   
+
     private RunFunSubScene highscoreSubScene;
     private RunFunSubScene characterChooserScene;
     private RunFunSubScene creditsSubScene;
-    
+
     private RunFunSubScene sceneToHide;
-    
-    
-    //private RunFunSubScene creditsSubScene;
+
+    // private RunFunSubScene creditsSubScene;
 
     List<RunFunButton> menuButtons;
+
+    List<CharacterPicker> characterList;
+    private CHARACTER choosenCharacter;
 
     public ViewManager() {
         menuButtons = new ArrayList<>();
@@ -44,27 +50,63 @@ public class ViewManager {
         createSubScenes();
         createButtons();
         createBackground();
-        
-        
+
     }
+
     private void showSubScene(RunFunSubScene subScene) {
-        if(sceneToHide != null) {
+        if (sceneToHide != null) {
             sceneToHide.moveSubScene();
         }
         subScene.moveSubScene();
         sceneToHide = subScene;
     }
+
     private void createSubScenes() {
-        
+
         highscoreSubScene = new RunFunSubScene();
         mainPane.getChildren().add(highscoreSubScene);
-        
-        characterChooserScene = new RunFunSubScene();
-        mainPane.getChildren().add(characterChooserScene);
-        
+
+        createCharacterChooserSubScene();
+
         creditsSubScene = new RunFunSubScene();
         mainPane.getChildren().add(creditsSubScene);
-        
+
+    }
+
+    private void createCharacterChooserSubScene() {
+        characterChooserScene = new RunFunSubScene();
+        mainPane.getChildren().add(characterChooserScene);
+        InfoLabel chooseCharacterLabel = new InfoLabel("Wähle deinen Charakter");
+        chooseCharacterLabel.setLayoutX(75);
+        chooseCharacterLabel.setLayoutY(25);
+        characterChooserScene.getPane().getChildren().add(chooseCharacterLabel);
+        characterChooserScene.getPane().getChildren().add(createCharacterToChoose());
+
+    }
+
+    private HBox createCharacterToChoose() {
+        HBox box = new HBox();
+        box.setSpacing(20);
+        characterList = new ArrayList<>();
+        for (CHARACTER character : CHARACTER.values()) {
+            CharacterPicker characterToPick = new CharacterPicker(character);
+            characterList.add(characterToPick);
+            box.getChildren().add(characterToPick);
+            characterToPick.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    for(CharacterPicker character : characterList) {
+                        character.setIsCircleChoosen(false);
+                    }
+                    characterToPick.setIsCircleChoosen(true);
+                    choosenCharacter = characterToPick.getCharacter();
+                }
+            });
+        }
+        box.setLayoutX(180-(118*2));
+        box.setLayoutY(100);
+        return box;
     }
 
     public Stage getMainStage() {
@@ -81,7 +123,7 @@ public class ViewManager {
     private void createButtons() {
         createStartButton();
         createScoreButton();
-        //createHelpButton();
+        // createHelpButton();
         createCreditsButton();
         createExitButton();
     }
@@ -91,24 +133,24 @@ public class ViewManager {
         addMenuButton(startButton);
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-            
 
             @Override
             public void handle(ActionEvent event) {
-                   showSubScene(characterChooserScene);
-        }});
+                showSubScene(characterChooserScene);
+            }
+        });
     }
 
     private void createScoreButton() {
         RunFunButton highscoreButton = new RunFunButton("HIGHSCORE");
         addMenuButton(highscoreButton);
         highscoreButton.setOnAction(new EventHandler<ActionEvent>() {
-            
 
             @Override
             public void handle(ActionEvent event) {
-                   showSubScene(highscoreSubScene);
-        }});
+                showSubScene(highscoreSubScene);
+            }
+        });
     }
 
 //    private void createHelpButton() {
@@ -120,14 +162,14 @@ public class ViewManager {
     private void createCreditsButton() {
         RunFunButton creditsButton = new RunFunButton("CREDITS");
         addMenuButton(creditsButton);
-        
+
         creditsButton.setOnAction(new EventHandler<ActionEvent>() {
-        
 
             @Override
             public void handle(ActionEvent event) {
-                   showSubScene(creditsSubScene);
-        }});
+                showSubScene(creditsSubScene);
+            }
+        });
     }
 
     private void createExitButton() {
@@ -141,14 +183,16 @@ public class ViewManager {
                 // TODO Auto-generated method stub
                 mainStage.close();
             }
-            
+
         });
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("/view/resources/runfunTitelbildschirm.png", 1024, 768, false, true);
-        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        Image backgroundImage = new Image("/view/resources/runfunTitelbildschirm.png", 1024, 768,
+                false, true);
+        BackgroundImage background = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                null);
         mainPane.setBackground(new Background(background));
     }
 }
