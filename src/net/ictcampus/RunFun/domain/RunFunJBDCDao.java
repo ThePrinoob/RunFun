@@ -17,23 +17,23 @@ public class RunFunJBDCDao implements RunFunDao{
     private ResultSet rs = null;
 
     
-    public Player findPlayerByName(String name) {
+    public highscore findhighscoreByName(String name) {
         return null;
     }
     
 
-    public List<Player> findAllPlayers() {
-        List<Player> all = new ArrayList<>();
+    public List<highscore> findAllPlayers() {
+        List<highscore> all = new ArrayList<>();
         
-        String sql = "Select * from Person";
+        String sql = "Select * from highscore";
         try {
             con = openConnection();
         
-        ps = con.prepareStatement(sql);
+       ps = con.prepareStatement(sql);
         rs = ps.executeQuery();
         while (rs.next()) {
-            int id = rs.getInt("ID_Person");
-            all.add(new Player(rs.getString("name"), rs.getInt("geschwindigkeit"), rs.getString("item"), rs.getInt("score")));
+          int id = rs.getInt("ID_highscore");
+          all.add(new highscore(rs.getString("name"), rs.getTime("time")));
         }
         closeConnection();
         } catch (SQLException e) {

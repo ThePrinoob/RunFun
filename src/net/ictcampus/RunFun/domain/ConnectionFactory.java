@@ -22,7 +22,7 @@ public class ConnectionFactory {
     public static ConnectionFactory getInstance(){
         if (connectionFactory == null){
     
-            connectionFactory = new ConnectionFactory("jdbc:mysql://localhost/casino", "root", "1234");
+            connectionFactory = new ConnectionFactory("jdbc:mysql://localhost/RunFun", "root", "1234");
         }
         return connectionFactory;
     }

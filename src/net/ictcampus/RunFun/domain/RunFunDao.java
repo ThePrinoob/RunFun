@@ -7,7 +7,7 @@ import net.ictcampus.RunFun.Player;
 public interface RunFunDao {
     public List<Player> findAllPlayers();
 
-    public Player findPlayerByName(String name);
+    public Player findhighscoreByName(String name);
 }
 
 
