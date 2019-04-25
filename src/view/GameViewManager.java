@@ -4,16 +4,13 @@ import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.CHARACTER;
-import model.InfoLabel;
+import model.map.TileMap;
 
 public class GameViewManager {
 
@@ -33,6 +30,7 @@ public class GameViewManager {
     private GridPane gridPane1;
     private GridPane gridPane2;
     private static int time = 0;
+//    private TileMap tileMap = TileMapReader.readMap("/de/eppleton/tileengine/resources/maps/sample.tmx");
 
     public GameViewManager() {
         initializeStage();
@@ -123,7 +121,7 @@ public class GameViewManager {
             angle += 5;
         }
         character.setRotate(angle);
-        if (character.getLayoutX() <950) {
+        if (character.getLayoutX() < 950) {
             character.setLayoutX(character.getLayoutX() + 7);
         }
     }
@@ -159,7 +157,6 @@ public class GameViewManager {
 
     }
 
-    
     private void createBackground() {
         gridPane1 = new GridPane();
         gridPane2 = new GridPane();
@@ -173,7 +170,7 @@ public class GameViewManager {
             gridPane2.getChildren().add(backgroundImage2);
         }
 
-        gridPane2.setLayoutY(-1080);
+        gridPane2.setLayoutY(-1024);
 
         gamePane.getChildren().addAll(gridPane1, gridPane2);
     }
@@ -182,12 +179,12 @@ public class GameViewManager {
         gridPane1.setLayoutY(gridPane1.getLayoutY() + 1);
         gridPane2.setLayoutY(gridPane2.getLayoutY() + 1);
 
-        if (gridPane1.getLayoutY() >= 1080) {
-            gridPane1.setLayoutY(-1080);
+        if (gridPane1.getLayoutY() >= 1024) {
+            gridPane1.setLayoutY(-1024);
         }
 
-        if (gridPane2.getLayoutY() >= 1080) {
-            gridPane2.setLayoutY(-1080);
+        if (gridPane2.getLayoutY() >= 1024) {
+            gridPane2.setLayoutY(-1024);
         }
     }
 
@@ -197,5 +194,21 @@ public class GameViewManager {
 
     public void setGamePane(AnchorPane gamePane) {
         this.gamePane = gamePane;
+    }
+
+    public Scene getGameScene() {
+        return gameScene;
+    }
+
+    public void setGameScene(Scene gameScene) {
+        this.gameScene = gameScene;
+    }
+
+    public Stage getMenuStage() {
+        return menuStage;
+    }
+
+    public void setMenuStage(Stage menuStage) {
+        this.menuStage = menuStage;
     }
 }
