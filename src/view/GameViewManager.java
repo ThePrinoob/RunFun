@@ -11,14 +11,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.CHARACTER;
 
-
 public class GameViewManager {
 
-    private static final int GAME_WIDTH = 600;
-    private static final int GAME_HEIGHT = 800;
-    private final static String METEOR_BROWN_IMAGE = "/ShipChooser/meteor_brown.png";
-    private final static String METEOR_GRAY_IMAGE = "/ShipChooser/meteor_gray.png";
-    private final String BACKGROUND_IMAGE = "/blue.png";
+    private static final int GAME_WIDTH = 1080;
+    private static final int GAME_HEIGHT = 720;
+    private final String BACKGROUND_IMAGE = "view/resources/background/backgroundColorGrass.png";
     Random randomPositionGenerator;
     private AnchorPane gamePane;
     private Scene gameScene;
@@ -32,7 +29,6 @@ public class GameViewManager {
     private GridPane gridPane1;
     private GridPane gridPane2;
     private static int time = 0;
-
 
     public GameViewManager() {
         initializeStage();
@@ -75,86 +71,58 @@ public class GameViewManager {
 
     }
 
-    public void createNewGame(Stage menuStage, CHARACTER chosenCharacter) {
+    public void createNewGame(Stage menuStage, CHARACTER choosenCharacter) {
         this.menuStage = menuStage;
         this.menuStage.hide();
         createBackground();
-        createCharacter(chosenCharacter);
-        createGameElements(chosenCharacter);
+        createCharacter(choosenCharacter);
+//        createGameElements(choosenCharacter);
 
-//        createGameLoop();
+        createGameLoop();
         gameStage.show();
     }
 
-    private void createGameElements(CHARACTER chosenCharacter) {
-        playerLife = 2;
-        star = new ImageView(GOLD_STAR_IMAGE);
-        setNewElementPosition(star);
-        gamePane.getChildren().add(star);
-        playerLives = new ImageView[3];
+    private void createGameLoop() {
+        gameTimer = new AnimationTimer() {
 
-        for (int i = 0; i < playerLives.length; i++) {
-            playerLives[i] = new ImageView(chosenCharacter.getUrlLife());
-            playerLives[i].setLayoutX(455 + (i * 50));
-            playerLives[i].setLayoutY(80);
-            gamePane.getChildren().add(playerLives[i]);
-        }
+            @Override
+            public void handle(long arg0) {
+                // TODO Auto-generated method stub
+                moveCharacter();
+                characterRun();
+            }
+        };
+        gameTimer.start();
+    }
 
-        brownMeteors = new ImageView[5];
-        for (int i = 0; i < brownMeteors.length; i++) {
-            brownMeteors[i] = new ImageView(METEOR_BROWN_IMAGE);
-            setNewElementPosition(brownMeteors[i]);
-            gamePane.getChildren().add(brownMeteors[i]);
-        }
+    private void createCharacter(CHARACTER choosenCharacter) {
+        character = new ImageView(choosenCharacter.getUrl());
+        character.setLayoutX(0);
+        character.setLayoutY(0);
+        gamePane.getChildren().add(character);
+    }
 
-        grayMeteors = new ImageView[5];
-        for (int i = 0; i < grayMeteors.length; i++) {
-            grayMeteors[i] = new ImageView(METEOR_GRAY_IMAGE);
-            setNewElementPosition(grayMeteors[i]);
-            gamePane.getChildren().add(grayMeteors[i]);
-        }
+    private void createBotPlayers(CHARACTER choosenCharacter) {
+
     }
 
     private void moveGameElements() {
-//        gameAsteroidsElement(brownMeteors);
-//        gameAsteroidsElement(grayMeteors);
-//
-//        star.setLayoutY(star.getLayoutY() + 7);
-//        star.setRotate(star.getRotate() + 3);
 
     }
-
 
     private void checkIfTheCharacterIsBeforeAMountainAndEnable() {
 
-//        if (star.getLayoutY() > 1200) {
-//            setNewElementPosition(star);
-//        }
-//
-//        for (ImageView brownMeteors : brownMeteors) {
-//            if (brownMeteors.getLayoutY() > 900)
-//                setNewElementPosition(brownMeteors);
-//        }
-//
-//        for (ImageView grayMeteors : grayMeteors) {
-//            if (grayMeteors.getLayoutY() > 900)
-//                setNewElementPosition(grayMeteors);
-//        }
     }
 
-    private void setNewElementPosition(ImageView image) {
-        image.setLayoutX(randomPositionGenerator.nextInt(580));
-        image.setLayoutY(-(randomPositionGenerator.nextInt(3200) + 600));
+    private void characterRun() {
+        if (angle < 30) {
+            angle += 5;
+        }
+        character.setRotate(angle);
+        if (character.getLayoutX() < 950) {
+            character.setLayoutX(character.getLayoutX() + 7);
+        }
     }
-
-//    private void createCharacter(CHARACTER chosenCharacter) {
-//        ship = new ImageView(chosenCharacter.getUrlShip());
-//        ship.setLayoutX(GAME_WIDTH >> 1);
-//        ship.setLayoutY(GAME_HEIGHT - 90);
-//        gamePane.getChildren().add(ship);
-//    }
-
-
 
     private void moveCharacter() {
 
