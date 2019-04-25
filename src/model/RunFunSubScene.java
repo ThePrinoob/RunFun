@@ -1,5 +1,6 @@
 package model;
 
+//imports
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,7 +39,6 @@ public class RunFunSubScene extends SubScene {
         isHidden = true;
         setLayoutX(1080);
         setLayoutY(100);
-
 
     }
 
@@ -87,6 +87,5 @@ public class RunFunSubScene extends SubScene {
     public AnchorPane getPane() {
         return (AnchorPane) this.getRoot();
     }
-
 
 }

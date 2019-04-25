@@ -1,5 +1,6 @@
 package application;
-	
+
+//imports
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.ViewManager;
@@ -16,10 +17,9 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-  
+
     public static void main(String[] args) {
         launch(args);
     }
-
 
 }

@@ -1,7 +1,9 @@
 package view;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -12,6 +14,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.HBox;
+
 import javafx.stage.Stage;
 import javafx.event.*;
 import model.CHARACTER;
@@ -19,6 +22,7 @@ import model.CharacterPicker;
 import model.InfoLabel;
 import model.RunFunButton;
 import model.RunFunSubScene;
+
 
 public class ViewManager {
     private static final int WIDTH = 1080, HEIGHT = 720;
@@ -37,6 +41,13 @@ public class ViewManager {
 
     // private RunFunSubScene creditsSubScene;
 
+    
+    
+//    String hitNormal = ("choose_your_character.mp3");
+//    Media sound = new Media(new File(hitNormal).toURI().toString());
+//    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+    
+    
     List<RunFunButton> menuButtons;
 
     List<CharacterPicker> characterList;
@@ -76,6 +87,10 @@ public class ViewManager {
 
     }
 
+   
+
+    
+    
     private void createCharacterChooserSubScene() {
         characterChooserScene = new RunFunSubScene();
         mainPane.getChildren().add(characterChooserScene);
@@ -85,6 +100,7 @@ public class ViewManager {
         characterChooserScene.getPane().getChildren().add(chooseCharacterLabel);
         characterChooserScene.getPane().getChildren().add(createCharacterToChoose());
         characterChooserScene.getPane().getChildren().add(createButtonToStart());
+
         
     }
 

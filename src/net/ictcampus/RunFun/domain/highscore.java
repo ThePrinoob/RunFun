@@ -1,5 +1,6 @@
 package net.ictcampus.RunFun.domain;
 
+//imports
 import java.sql.Time;
 
 public class highscore {
