@@ -117,6 +117,18 @@ public class ViewManager {
         RunFunButton startButton = new RunFunButton("Start");
         startButton.setLayoutX(400);
         startButton.setLayoutY(450);
+        
+        startButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if(choosenCharacter != null) {
+                    GameViewManager gameManager = new GameViewManager();
+                    gameManager.createNewGame(mainStage, choosenCharacter);
+                }
+            }
+        });
+        
         return startButton;
     }
     public Stage getMainStage() {
