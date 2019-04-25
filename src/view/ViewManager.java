@@ -1,12 +1,14 @@
 package view;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+import Audio.AudioPlayer;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -16,24 +18,21 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.event.*;
 import model.CHARACTER;
 import model.CharacterPicker;
 import model.InfoLabel;
 import model.RunFunButton;
 import model.RunFunSubScene;
 
-import Audio.AudioPlayer;
-
-
 public class ViewManager {
     private static final int WIDTH = 1080, HEIGHT = 720;
     private final static int MENU_BUTTONS_START_X = 450;
     private final static int MENU_BUTTONS_START_Y = 250;
-    
+
     private AnchorPane mainPane;
     private Stage mainStage;
     private Scene mainScene;
@@ -43,25 +42,21 @@ public class ViewManager {
     private RunFunSubScene creditsSubScene;
 
     private RunFunSubScene sceneToHide;
-    
-    private HashMap<String, AudioPlayer> sfx;
-    
+
+
 
     // private RunFunSubScene creditsSubScene;
 
-    
-    
 //    String hitNormal = ("choose_your_character.mp3");
 //    Media sound = new Media(new File(hitNormal).toURI().toString());
 //    MediaPlayer mediaPlayer = new MediaPlayer(sound);
-    
-    
+ 
     List<RunFunButton> menuButtons;
 
     List<CharacterPicker> characterList;
     private CHARACTER choosenCharacter;
-    
-    //Audio
+
+    // Audio
 //    private AudioPlayer chooseYourCharacter;
 
     public ViewManager() {
@@ -72,12 +67,10 @@ public class ViewManager {
         mainStage.setScene(mainScene);
         createButtons();
         createSubScenes();
-        
+
         createBackground();
-       
 
     }
-
 
     private void showSubScene(RunFunSubScene subScene) {
         if (sceneToHide != null) {
@@ -99,28 +92,27 @@ public class ViewManager {
 
     }
 
-   
+    
 
-    
-    
-    private void createCharacterChooserSubScene() {
+    public void createCharacterChooserSubScene() {
         characterChooserScene = new RunFunSubScene();
         mainPane.getChildren().add(characterChooserScene);
         InfoLabel chooseCharacterLabel = new InfoLabel("Wähle deinen Charakter");
         chooseCharacterLabel.setLayoutX(260);
         chooseCharacterLabel.setLayoutY(25);
-        TextField name = new TextField("");
-        name.setPromptText("Gebe deinen Namen ein");
-        name.setLayoutX(260);
-        name.setLayoutY(100);
-        name.setPrefSize(500,  50);
-        name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+//        TextField name = new TextField("");
+//        name.setPromptText("Gebe deinen Namen ein");
+//        name.setLayoutX(260);
+//        name.setLayoutY(100);
+//        name.setPrefSize(500, 50);
+//        name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+//        myText = name.getText();
+
         characterChooserScene.getPane().getChildren().add(chooseCharacterLabel);
-        characterChooserScene.getPane().getChildren().add(name);
+        //characterChooserScene.getPane().getChildren().add(name);
         characterChooserScene.getPane().getChildren().add(createCharacterToChoose());
         characterChooserScene.getPane().getChildren().add(createButtonToStart());
 
-        
     }
 
     private HBox createCharacterToChoose() {
@@ -135,8 +127,8 @@ public class ViewManager {
 
                 @Override
                 public void handle(MouseEvent event) {
-                    
-                    for(CharacterPicker character : characterList) {
+
+                    for (CharacterPicker character : characterList) {
                         character.setIsCircleChoosen(false);
                     }
                     characterToPick.setIsCircleChoosen(true);
@@ -144,7 +136,7 @@ public class ViewManager {
                 }
             });
         }
-        box.setLayoutX(400-(118*2));
+        box.setLayoutX(400 - (118 * 2));
         box.setLayoutY(250);
         return box;
     }
@@ -153,22 +145,50 @@ public class ViewManager {
         RunFunButton startButton = new RunFunButton("Start");
         startButton.setLayoutX(400);
         startButton.setLayoutY(500);
+        TextField name = new TextField("");
+        name.setPromptText("Gebe deinen Namen ein");
+        name.setLayoutX(260);
+        name.setLayoutY(100);
+        name.setPrefSize(500, 50);
+        name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+       
+        
+        characterChooserScene.getPane().getChildren().add(name);
         
         startButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                if(choosenCharacter != null) {
-                    GameViewManager gameManager = new GameViewManager();
-                    gameManager.createNewGame(mainStage, choosenCharacter);
+                if (name.getText().isEmpty()) {
+                    Label labelresponse= new Label();
+                    labelresponse.setLayoutX(200);
+                    labelresponse.setLayoutY(175);
+                    labelresponse.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+                    labelresponse.setText("Du musst einen Namen eingeben, um das Spiel zu starten");
+                    characterChooserScene.getPane().getChildren().add(labelresponse);
+                }
+                else {
+                    if (choosenCharacter != null) {
+                        GameViewManager gameManager = new GameViewManager();
+                        gameManager.createNewGame(mainStage, choosenCharacter);
+                    }
+                    else {
+                        Label labelresponse2= new Label();
+                        labelresponse2.setLayoutX(180);
+                        labelresponse2.setLayoutY(225);
+                        labelresponse2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+                        labelresponse2.setText("Du musst einen Charakter auswählen, um das Spiel zu starten");
+                        characterChooserScene.getPane().getChildren().add(labelresponse2);
+                    }
                 }
             }
         });
-        
+
         return startButton;
     }
+
     public Stage getMainStage() {
-        
+
         return mainStage;
     }
 
@@ -178,7 +198,6 @@ public class ViewManager {
         menuButtons.add(button);
         mainPane.getChildren().add(button);
     }
-    
 
     private void createButtons() {
         createStartButton();
@@ -193,14 +212,22 @@ public class ViewManager {
         addMenuButton(startButton);
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(ActionEvent event) {
                 showSubScene(characterChooserScene);
-                sfx=new HashMap<String,AudioPlayer>();
-                sfx.put("choose", new AudioPlayer("D:/RunFun/src/view/resources/sfx/chooseyourcharacter.mp3"));
-                sfx.get("choose").play();
-                
+//                sfx = new HashMap<String, AudioPlayer>();
+//                sfx.put("choose", new AudioPlayer(
+//                        "./sfx/chooseyourcharacter.mp3"));
+//                sfx.get("choose").play();
+//                String musicFile = "./sfx/chooseyourcharacter.mp3";     // For example
+//
+//                Media sound = new Media(new File(musicFile).toURI().toString());
+//                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//                mediaPlayer.play();
+               AudioClip note = new AudioClip(this.getClass().getResource("chooseyourcharacter.mp3").toString());
+               note.play(100);
+
             }
         });
     }
@@ -252,8 +279,8 @@ public class ViewManager {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("/view/resources/background/runfunTitelbildschirm.png", 1080, 720,
-                false, true);
+        Image backgroundImage = new Image("/view/resources/background/runfunTitelbildschirm.png",
+                1080, 720, false, true);
         BackgroundImage background = new BackgroundImage(backgroundImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 null);
