@@ -23,7 +23,7 @@ import model.RunFunSubScene;
 public class ViewManager {
     private static final int WIDTH = 1080, HEIGHT = 720;
     private final static int MENU_BUTTONS_START_X = 450;
-    private final static int MENU_BUTTONS_START_Y = 150;
+    private final static int MENU_BUTTONS_START_Y = 250;
     
     private AnchorPane mainPane;
     private Stage mainStage;
