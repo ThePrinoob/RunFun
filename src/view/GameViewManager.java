@@ -185,4 +185,12 @@ public class GameViewManager {
             gridPane2.setLayoutY(-1024);
         }
     }
+
+    public AnchorPane getGamePane() {
+        return gamePane;
+    }
+
+    public void setGamePane(AnchorPane gamePane) {
+        this.gamePane = gamePane;
+    }
 }
