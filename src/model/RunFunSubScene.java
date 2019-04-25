@@ -38,11 +38,7 @@ public class RunFunSubScene extends SubScene {
         isHidden = true;
         setLayoutX(1080);
         setLayoutY(100);
-//
-//        isHidden = true;
-//
-//        setLayoutX(1024);
-//        setLayoutY(180);
+
 
     }
 
@@ -52,7 +48,7 @@ public class RunFunSubScene extends SubScene {
         transition.setNode(this);
 
         if (isHidden) {
-            transition.setToX(-1000);
+            transition.setToX(-1040);
             isHidden = false;
         } else {
             transition.setToX(0);
@@ -92,24 +88,5 @@ public class RunFunSubScene extends SubScene {
         return (AnchorPane) this.getRoot();
     }
 
-//    public void moveSubScene() {
-//        TranslateTransition transition = new TranslateTransition();
-//        transition.setDuration(Duration.seconds(0.3));
-//        transition.setNode(this);
-//
-//        if (isHidden) {
-//            transition.setToX(-676);
-//            isHidden = false;
-//        } else {
-//            transition.setToX(0);
-//            isHidden = true;
-//        }
-//
-//        transition.play();
-//    }
-//
-//    public AnchorPane getPane() {
-//        return (AnchorPane) this.getRoot();
-//    }
 
 }
