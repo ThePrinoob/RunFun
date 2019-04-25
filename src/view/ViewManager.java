@@ -21,7 +21,7 @@ import model.RunFunButton;
 import model.RunFunSubScene;
 
 public class ViewManager {
-    private static final int WIDTH = 1024, HEIGHT = 768;
+    private static final int WIDTH = 1080, HEIGHT = 720;
     private final static int MENU_BUTTONS_START_X = 100;
     private final static int MENU_BUTTONS_START_Y = 150;
     
@@ -199,7 +199,7 @@ public class ViewManager {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("/view/resources/runfunTitelbildschirm.png", 1024, 768,
+        Image backgroundImage = new Image("/view/resources/runfunTitelbildschirm.png", 1080, 720,
                 false, true);
         BackgroundImage background = new BackgroundImage(backgroundImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,

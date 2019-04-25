@@ -36,7 +36,7 @@ public class RunFunSubScene extends SubScene {
         root2.getChildren().add(createCloseButton());
 
         isHidden = true;
-        setLayoutX(1024);
+        setLayoutX(1080);
         setLayoutY(100);
 //
 //        isHidden = true;
