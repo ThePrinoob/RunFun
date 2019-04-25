@@ -24,6 +24,7 @@ public class ViewManager {
     private static final int WIDTH = 1024, HEIGHT = 768;
     private final static int MENU_BUTTONS_START_X = 100;
     private final static int MENU_BUTTONS_START_Y = 150;
+    
     private AnchorPane mainPane;
     private Stage mainStage;
     private Scene mainScene;
@@ -47,9 +48,11 @@ public class ViewManager {
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
-        createSubScenes();
         createButtons();
+        createSubScenes();
+        
         createBackground();
+       
 
     }
 
@@ -77,11 +80,12 @@ public class ViewManager {
         characterChooserScene = new RunFunSubScene();
         mainPane.getChildren().add(characterChooserScene);
         InfoLabel chooseCharacterLabel = new InfoLabel("Wähle deinen Charakter");
-        chooseCharacterLabel.setLayoutX(75);
+        chooseCharacterLabel.setLayoutX(260);
         chooseCharacterLabel.setLayoutY(25);
         characterChooserScene.getPane().getChildren().add(chooseCharacterLabel);
         characterChooserScene.getPane().getChildren().add(createCharacterToChoose());
-
+        characterChooserScene.getPane().getChildren().add(createButtonToStart());
+        
     }
 
     private HBox createCharacterToChoose() {
@@ -104,11 +108,17 @@ public class ViewManager {
                 }
             });
         }
-        box.setLayoutX(180-(118*2));
-        box.setLayoutY(100);
+        box.setLayoutX(400-(118*2));
+        box.setLayoutY(200);
         return box;
     }
 
+    private RunFunButton createButtonToStart() {
+        RunFunButton startButton = new RunFunButton("Start");
+        startButton.setLayoutX(400);
+        startButton.setLayoutY(450);
+        return startButton;
+    }
     public Stage getMainStage() {
         return mainStage;
     }
@@ -119,6 +129,7 @@ public class ViewManager {
         menuButtons.add(button);
         mainPane.getChildren().add(button);
     }
+    
 
     private void createButtons() {
         createStartButton();

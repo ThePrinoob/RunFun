@@ -22,8 +22,10 @@ public class CharacterPicker extends VBox {
         characterImage = new ImageView(character.getUrl());
         this.character = character;
         isCircleChoosen = false;
+        this.setLayoutX(260);
+        this.setLayoutY(200);
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(20);
+        this.setSpacing(25);
         this.getChildren().add(circleImage);
         this.getChildren().add(characterImage);
         
