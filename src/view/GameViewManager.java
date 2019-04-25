@@ -76,7 +76,7 @@ public class GameViewManager {
         this.menuStage.hide();
         createBackground();
         createCharacter(choosenCharacter);
-//        createGameElements(choosenCharacter);
+//      createGameElements(choosenCharacter);
 
         createGameLoop();
         gameStage.show();
@@ -98,7 +98,7 @@ public class GameViewManager {
     private void createCharacter(CHARACTER choosenCharacter) {
         character = new ImageView(choosenCharacter.getUrl());
         character.setLayoutX(0);
-        character.setLayoutY(0);
+        character.setLayoutY(GAME_HEIGHT - 130);
         gamePane.getChildren().add(character);
     }
 
@@ -185,5 +185,4 @@ public class GameViewManager {
             gridPane2.setLayoutY(-1024);
         }
     }
-
 }

@@ -252,7 +252,7 @@ public class ViewManager {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("/view/resources/runfunTitelbildschirm.png", 1080, 720,
+        Image backgroundImage = new Image("/view/resources/background/runfunTitelbildschirm.png", 1080, 720,
                 false, true);
         BackgroundImage background = new BackgroundImage(backgroundImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
