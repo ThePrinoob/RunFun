@@ -7,10 +7,14 @@ package javaDB;
 
     public interface insertPlayer {
         //Methode, um die Spieler anhand des Namens zu finden
-            public boolean insertPlayerDB(String name, int maxPunkte);
             
-            public boolean updatePlayerDB(String name, int maxPunkte);
+            
+     
             
             public List<Person> selectPlayerDB();
+
+            public boolean insertPlayerDB(String name);
+
+            boolean updatePlayerDB(String name, int maxPunkte);
             
 }

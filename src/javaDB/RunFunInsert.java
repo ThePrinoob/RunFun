@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import application.Main;
+//import application.Main;
 import application.Person;
 import javaDB.ConnectionFactory;
 
@@ -18,21 +18,21 @@ public class RunFunInsert implements insertPlayer {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     
-
     @Override
-    public boolean insertPlayerDB(String name, int maxPunkte) {
+    public boolean insertPlayerDB(String name) {
         // SQL Querie
-        String insert = "Insert into highscore (Name) values (?);";
+        String insert = "Insert into highscore (username, time, map_id) values (?,?,?);";
         try {
             // Verbindung aufbauen
             con = openConnection();
 
-            // Statement vorbereiten, sodass es dann ausgeführt werden kann
+            // Statement ausführbar machen
             ps = con.prepareStatement(insert);
 
             // Werte anbinden
             ps.setString(1, name);
-//            ps.setInt(2, maxPunkte);
+            ps.setInt(2, 00);
+            ps.setInt(3, 1);
 
             // Ausführen des Queries
             ps.executeUpdate();

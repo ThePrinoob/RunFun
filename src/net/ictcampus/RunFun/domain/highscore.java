@@ -1,17 +1,31 @@
 package net.ictcampus.RunFun.domain;
 
-//imports
-import java.sql.Time;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import application.Person;
+import javafx.scene.control.Label;
+import javaDB.*;
 
 public class highscore {
 
-    private String username;
-    private Time time;
-    private String name;
+    private int podest =1;
 
-    public highscore(String username, Time time, String name) {
-        this.username = username;
-        this.time = time;
-        this.name = name;
+    public void ausgebenRangliste(Label name, Label punkte) {
+        // Liste mit den Personen
+        List<Person> person = new ArrayList<>();
+
+        // Objekt erstellen
+        FunRunSelect select = new FunRunSelect();
+        person = select.selectPlayerDB();
+
+        // Ausgeben der ausgelesenen Spieler
+        for (Person p : person) {
+            name.setText(name.getText() + "\n" + podest + ". " + p.getBenutzername());
+            punkte.setText(punkte.getText() + "\n" + p.getMaxPunkte());
+            podest++;
+        }
+
     }
 }
