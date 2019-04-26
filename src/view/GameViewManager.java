@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +24,7 @@ public class GameViewManager {
     private final String BACKGROUND_IMAGE = "view/resources/background/backgroundColorGrass.png";
     Random randomPositionGenerator;
     private BorderPane gamePane;
+    private Canvas canvas;
     private Scene gameScene;
     private Stage gameStage;
     private Stage menuStage;
@@ -130,7 +132,7 @@ public class GameViewManager {
                         switch (block) {
                         // Blöcke Deko
                         case "-20":
-                            g.drawImage(bildEsc, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
+                            canvas.getGraphics().drawImage(bildEsc, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
                             break;
                         case "-19":
                             g.drawImage(bildLeertaste, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
