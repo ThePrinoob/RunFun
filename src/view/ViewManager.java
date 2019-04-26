@@ -341,12 +341,12 @@ public class ViewManager {
                 person = select.selectPlayerDB();
 
                 // Ausgeben der ausgelesenen Spieler
-                score.setText(person[0]);
+                score.setText("lel");
                 
                 highscoreSubScene.getPane().getChildren().add(score);
                 
                  
-                }}
+                }
         });
         }
 
