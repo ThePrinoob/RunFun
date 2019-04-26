@@ -2,6 +2,7 @@ package application;
 
 //imports
 import javafx.application.Application;
+
 import javafx.stage.Stage;
 import view.ViewManager;
 
@@ -16,6 +17,8 @@ public class Main extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        
     }
 
     public static void main(String[] args) {

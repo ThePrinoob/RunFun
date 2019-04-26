@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -70,7 +72,44 @@ public class ViewManager {
 
         createBackground();
 
+        
+//        mainPane.setOnKeyPressed(e -> {
+//            if (e.getCode() == KeyCode.K) {
+//                ViewManager manager = new ViewManager();
+//                primaryStage = manager.getMainStage();
+//                primaryStage.show();
+//             //mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+           
+//             @Override
+//             public void handle (KeyEvent event) {
+////                 ViewManager manager = new ViewManager();
+////                 
+//                
+//             }
+             
+        // });  
     }
+//public void start(Stage primaryStage) {
+//    
+//    mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//        
+//     @Override
+//     public void handle (KeyEvent event) {
+//         try {
+//             ViewManager manager = new ViewManager();
+//             primaryStage = manager.getMainStage();
+//             primaryStage.show();
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//         }
+//      
+//     }}); 
+    
+    
+    
+
+    
+
 
     private void showSubScene(RunFunSubScene subScene) {
         if (sceneToHide != null) {
@@ -141,7 +180,7 @@ public class ViewManager {
         return box;
     }
 
-    private RunFunButton createButtonToStart() {
+    public RunFunButton createButtonToStart() {
         RunFunButton startButton = new RunFunButton("Start");
         startButton.setLayoutX(400);
         startButton.setLayoutY(500);
@@ -151,41 +190,49 @@ public class ViewManager {
         name.setLayoutY(100);
         name.setPrefSize(500, 50);
         name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-       
+        
         
         characterChooserScene.getPane().getChildren().add(name);
         
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                if (name.getText().isEmpty()) {
-                    Label labelresponse= new Label();
-                    labelresponse.setLayoutX(200);
-                    labelresponse.setLayoutY(175);
-                    labelresponse.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-                    labelresponse.setText("Du musst einen Namen eingeben, um das Spiel zu starten");
-                    characterChooserScene.getPane().getChildren().add(labelresponse);
-                }
-                else {
-                    if (choosenCharacter != null) {
-                        GameViewManager gameManager = new GameViewManager();
-                        gameManager.createNewGame(mainStage, choosenCharacter);
-                    }
-                    else {
-                        Label labelresponse2= new Label();
-                        labelresponse2.setLayoutX(180);
-                        labelresponse2.setLayoutY(225);
-                        labelresponse2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-                        labelresponse2.setText("Du musst einen Charakter auswählen, um das Spiel zu starten");
-                        characterChooserScene.getPane().getChildren().add(labelresponse2);
-                    }
-                }
-            }
-        });
+        //muss wieder eingefügt werden!! dient nur zur verschnellerten Probe
+//        startButton.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (name.getText().isEmpty()) {
+//                    Label labelresponse= new Label();
+//                    labelresponse.setLayoutX(200);
+//                    labelresponse.setLayoutY(175);
+//                    labelresponse.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+//                    labelresponse.setText("Du musst einen Namen eingeben, um das Spiel zu starten");
+//                    characterChooserScene.getPane().getChildren().add(labelresponse);
+//                }
+//                else {
+//                    if (choosenCharacter != null) {
+//                        GameViewManager gameManager = new GameViewManager();
+//                        gameManager.createNewGame(mainStage, choosenCharacter);
+//                    }
+//                    else {
+//                        Label labelresponse2= new Label();
+//                        labelresponse2.setLayoutX(180);
+//                        labelresponse2.setLayoutY(225);
+//                        labelresponse2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+//                        labelresponse2.setText("Du musst einen Charakter auswählen, um das Spiel zu starten");
+//                        characterChooserScene.getPane().getChildren().add(labelresponse2);
+//                    }
+//                }
+//            }
+//        });
+        
+        
 
         return startButton;
     }
+
+//    public void AddNewPlayer() {
+//        String name = name.getText();
+//
+//    }
 
     public Stage getMainStage() {
 
@@ -225,8 +272,11 @@ public class ViewManager {
 //                Media sound = new Media(new File(musicFile).toURI().toString());
 //                MediaPlayer mediaPlayer = new MediaPlayer(sound);
 //                mediaPlayer.play();
-               AudioClip note = new AudioClip(this.getClass().getResource("chooseyourcharacter.mp3").toString());
-               note.play(100);
+//               AudioClip note = new AudioClip(this.getClass().getResource("chooseyourcharacter.wav").toString());
+//               note.play(100);
+                
+                AudioClip sound = new AudioClip(this.getClass().getResource("chooseyourcharacter.mp3").toExternalForm());
+                sound.isPlaying();
 
             }
         });
@@ -286,4 +336,8 @@ public class ViewManager {
                 null);
         mainPane.setBackground(new Background(background));
     }
+
+
 }
+
+

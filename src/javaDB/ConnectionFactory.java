@@ -1,4 +1,4 @@
-package net.ictcampus.RunFun.domain;
+package javaDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,0 +1,100 @@
+package javaDB;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import application.Main;
+import application.Person;
+import javaDB.ConnectionFactory;
+
+
+public class RunFunInsert implements insertPlayer {
+
+    // Instanzvariablen
+    private Connection con = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+    
+
+    @Override
+    public boolean insertPlayerDB(String name, int maxPunkte) {
+        // SQL Querie
+        String insert = "Insert into highscore (Name) values (?);";
+        try {
+            // Verbindung aufbauen
+            con = openConnection();
+
+            // Statement vorbereiten, sodass es dann ausgeführt werden kann
+            ps = con.prepareStatement(insert);
+
+            // Werte anbinden
+            ps.setString(1, name);
+//            ps.setInt(2, maxPunkte);
+
+            // Ausführen des Queries
+            ps.executeUpdate();
+
+            // Verbindugn schliessen
+            closeConnection();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    // Methode, welche die Connection zur Datenbank aufbaut
+    private Connection openConnection() throws SQLException {
+        return ConnectionFactory.getInstance().getConnection();
+    }
+
+    // Methode, welche die Datenbankverbindung schliesst
+    private void closeConnection() {
+        try {
+
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error in " + getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean updatePlayerDB(String name, int maxPunkte) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public List<Person> selectPlayerDB() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+//    @Override
+//    public boolean updatePlayerDB(String name, int maxPunkte) {
+//        // TODO Auto-generated method stub
+//        return false;
+//    }
+//
+//    @Override
+//    public List<Person> selectPlayerDB() {
+//        return null;
+//        // TODO Auto-generated method stub
+//    }
+
+}

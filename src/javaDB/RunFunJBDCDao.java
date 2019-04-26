@@ -1,4 +1,4 @@
-package net.ictcampus.RunFun.domain;
+package javaDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.ictcampus.RunFun.Player;
-import net.ictcampus.RunFun.domain.ConnectionFactory;
+import net.ictcampus.RunFun.domain.highscore;
 
 public class RunFunJBDCDao implements RunFunDao {
 
