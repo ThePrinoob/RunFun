@@ -39,10 +39,10 @@ public class Karte {
 			// Zeile für Zeile einlesen
 			while ((zeile = bufRead.readLine()) != null) {
 				// Neues Array erstellen (gleiche Länge wie Zeile im Textfile)
-				laengeKarte = zeile.split(";").length;
+				laengeKarte = zeile.split(",").length;
 				String[] zeichenArray = new String[laengeKarte];
 				// Einzelne Zeichen in Array abspeichern
-				zeichenArray = zeile.split(";");
+				zeichenArray = zeile.split(",");
 				// Array in Array Liste hinzufügen
 				karteListe.add(zeichenArray);
 			}

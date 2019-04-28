@@ -225,8 +225,8 @@ public class ViewManager {
                 else {
                    if (choosenCharacter != null) {
                        
-                       RunFunInsert dao = new RunFunInsert();  
-                       dao.insertPlayerDB(name.getText());
+                       //RunFunInsert dao = new RunFunInsert();  
+                       //dao.insertPlayerDB(name.getText());
                        
                         GameViewManager gameManager = new GameViewManager();
                         gameManager.createNewGame(mainStage, choosenCharacter);
