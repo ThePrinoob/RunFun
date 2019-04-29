@@ -7,9 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.CHARACTER;
 import model.Karte;
@@ -21,6 +21,7 @@ public class GameViewManager {
 	private final String BACKGROUND_IMAGE = "view/resources/background/backgroundColorGrass.png";
 	Random randomPositionGenerator;
 	private GridPane gamePane;
+	private AnchorPane backPane;
 	private Scene gameScene;
 	private Stage gameStage;
 	private Stage menuStage;
@@ -34,76 +35,31 @@ public class GameViewManager {
 	private Bilder bilder;
 	private static int geschwindigkeit = 5;
 	private static int time = 0;
-	private Zeichnung zeichnung;
 	private Karte karte;
 	private static GameViewManager gameViewManager = new GameViewManager();
 
-	private int hoeheBlock = 120;
-	private int breiteBlock = 120;
+	private int hoeheBlock = 20;
+	private int breiteBlock = 20;
 
-//    private Image bildNachthimmel = gameViewManager.getBilder().getBildNachthimmel()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildNachthimmelSolid = gameViewManager.getBilder().getBildNachthimmel();
-//    private Image bildTaghimmel = gameViewManager.getBilder().getBildTaghimmel()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildErde = gameViewManager.getBilder().getBildErde().getScaledInstance(getBreiteBlock(),
-//            getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildStein = gameViewManager.getBilder().getBildStein()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildFeuer = gameViewManager.getBilder().getBildFeuer()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildWasser = gameViewManager.getBilder().getBildWasser()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildWasserGanz = gameViewManager.getBilder().getBildWasserGanz()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildFlagge = gameViewManager.getBilder().getBildFlagge()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildKFCUnten = gameViewManager.getBilder().getBildKFCUnten()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildKFCOben = gameViewManager.getBilder().getBildKFCOben()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildWueste = gameViewManager.getBilder().getBildWueste()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildPalme = gameViewManager.getBilder().getBildPalme()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff1 = gameViewManager.getBilder().getBildRaumschiff1()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff2 = gameViewManager.getBilder().getBildRaumschiff2()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff3 = gameViewManager.getBilder().getBildRaumschiff3()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff4 = gameViewManager.getBilder().getBildRaumschiff4()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff5 = gameViewManager.getBilder().getBildRaumschiff5()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff6 = gameViewManager.getBilder().getBildRaumschiff6()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRaumschiff7 = gameViewManager.getBilder().getBildRaumschiff7()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildWeltall = gameViewManager.getBilder().getBildWeltall()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildMond = gameViewManager.getBilder().getBildMond().getScaledInstance(getBreiteBlock(),
-//            getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildTrollface = gameViewManager.getBilder().getBildTrollface()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildLinks = gameViewManager.getBilder().getBildLinks()
-//            .getScaledInstance(getBreiteBlock(), getBreiteBlock(), Image.SCALE_SMOOTH);
-//    private Image bildRechts = gameViewManager.getBilder().getBildRechts()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
-//    private Image bildLeertaste = gameViewManager.getBilder().getBildLeertaste()
-//            .getScaledInstance(getBreiteBlock(), getHoeheBlock(), Image.SCALE_SMOOTH);
+	// Map images
+	private Image bildAbschraegungLinks = new Image(getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"));
+	private Image bildErdeOben = new Image(getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"));
+	private Image bildErdeRechts = new Image(getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"));
+	private Image bildErde = new Image(getClass().getResourceAsStream("resources/tiles/runfun_erde.png"));
+	private Image bildPunktRechtsOben = new Image(getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"));
+	private Image bildBg = new Image(getClass().getResourceAsStream("resources/tiles/runfun_bg.png"));
+	private Image bildRutscheUnten = new Image(getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"));
+	private Image bildErdeLinks = new Image(getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"));
+	
+	private ImageView imv;
 
-	private Image bildEsc;
-	private ImageView imv = new ImageView();
-
-//    private Image bildFigur;
 	private int posX = getBreiteBlock();
 	private int posY = getHoeheBlock() * 7 - 1;
 	private int beschleunigungX = 0;
 	private double beschleunigungY = 2;
 
 	private int anfangKarte = 0;
-	private int anzahlBloecke = 1;
+	private int anzahlBloecke = 20;
 	private int mitschiebenKarte = 0;
 	private int laengeKartenArray;
 	private int zeit = 0;
@@ -111,22 +67,17 @@ public class GameViewManager {
 
 	public GameViewManager() {
 		setKarte(new Karte());
-		setBilder(new Bilder());
 		initializeStage();
 		createKeyListeners();
-//        setBilder(new Bilder());
+		buildMap();
+
+	}
+
+	private void buildMap() {
 		new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-//                Graphics g = null;
 
-				bildEsc = getBilder().getBildEsc();
-				
-				imv.setImage(bildEsc);
-				imv.resize(70, 70);
-				HBox pictureRegion = new HBox();
-				pictureRegion.getChildren().add(imv);
-				pictureRegion.setPrefSize(70, 70);
 				int spaltenNummer = 0;
 				for (String[] zeile : getKarte().getKarteListe()) {
 					setLaengeKartenArray(zeile.length);
@@ -134,92 +85,44 @@ public class GameViewManager {
 					for (int i = getAnfangKarte(); i < getAnfangKarte() + getAnzahlBloecke(); i++) {
 						String block = zeile[i];
 						switch (block) {
-						// Blöcke Deko
+						// Blöcke Fest
 						case "-20":
-							gamePane.add(pictureRegion, zeilenNummer, spaltenNummer);
+							imv = new ImageView(bildAbschraegungLinks);
+							gamePane.add(imv, zeilenNummer, spaltenNummer);
 							break;
-//                        case "-19":
-//                            g.drawImage(bildLeertaste, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-18":
-//                            g.drawImage(bildRechts, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-17":
-//                            g.drawImage(bildLinks, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-16":
-//                            g.drawImage(bildWeltall, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-15":
-//                            g.drawImage(bildRaumschiff7, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-14":
-//                            g.drawImage(bildRaumschiff6, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-13":
-//                            g.drawImage(bildRaumschiff5, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-12":
-//                            g.drawImage(bildRaumschiff4, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-11":
-//                            g.drawImage(bildRaumschiff3, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-10":
-//                            g.drawImage(bildRaumschiff2, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-09":
-//                            g.drawImage(bildRaumschiff1, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-08":
-//                            g.drawImage(bildPalme, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-07":
-//                            g.drawImage(bildFeuer, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-06":
-//                            g.drawImage(bildKFCOben, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-05":
-//                            g.drawImage(bildWasserGanz, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-04":
-//                            g.drawImage(bildWasser, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-03":
-//                            g.drawImage(bildMond, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-02":
-//                            g.drawImage(bildNachthimmel, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "-01":
-//                            g.drawImage(bildTaghimmel, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//
-//                        // Blöcke fest
-//                        case "001":
-//                            g.drawImage(bildErde, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "002":
-//                            g.drawImage(bildStein, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "003":
-//                            g.drawImage(bildWueste, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "004":
-//                            g.drawImage(bildFlagge, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "005":
-//                            g.drawImage(bildTrollface, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "006":
-//                            g.drawImage(bildKFCUnten, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        case "007":
-//                            g.drawImage(bildNachthimmelSolid, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
-//                            break;
-//                        default:
-//                            g.drawImage(bildStein, zeilenNummer * getBreiteBlock() + getMitschiebenKarte(), spaltenNummer * getHoeheBlock(), null);
+                        case "131":
+                        	imv = new ImageView(bildErdeRechts);
+                        	gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            break;
+                        case "164":
+                        	imv = new ImageView(bildErde);
+                        	gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            break;
+                        case "145":
+                        	imv = new ImageView(bildPunktRechtsOben);
+                        	gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            break;
+                        case "154":
+                        	imv = new ImageView(bildErdeOben);
+                        	gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            break;
+                        case "133":
+                        	imv = new ImageView(bildRutscheUnten);
+                        	gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            break;
+                        case "138":
+                        	imv = new ImageView(bildErdeLinks);
+                        	gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            break;
+                            
+                        // Blöcke Decko
+                        case "0":
+                            break; 
+                       
+                            
+                            
+                        default:
+
 						}
 						zeilenNummer++;
 					}
@@ -231,25 +134,6 @@ public class GameViewManager {
 //                g.drawString((getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "." + (getZeit() % 100) / 10, 20, 40);
 			}
 		}.start();
-	}
-
-	public void zeichne(int i) {
-		gamePane.setVisible(false);
-		setZeichnung(new Zeichnung());
-		getZeichnung();
-
-	}
-
-	public void setKarte(Karte karte) {
-		this.karte = karte;
-	}
-
-	public static int getTime() {
-		return time;
-	}
-
-	public static void setPoints(int time) {
-		GameViewManager.time = time;
 	}
 
 	private void createKeyListeners() {
@@ -274,7 +158,9 @@ public class GameViewManager {
 
 	private void initializeStage() {
 		gamePane = new GridPane();
-		gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
+		backPane = new AnchorPane();
+		VBox box = new VBox();
+		gameScene = new Scene(backPane, GAME_WIDTH, GAME_HEIGHT);
 		gameStage = new Stage();
 		gameStage.setScene(gameScene);
 	}
@@ -285,8 +171,6 @@ public class GameViewManager {
 		createBackground();
 		createCharacter(choosenCharacter);
 //      createGameElements(choosenCharacter);
-
-		zeichne(1);
 		createGameLoop();
 		gameStage.show();
 	}
@@ -306,8 +190,11 @@ public class GameViewManager {
 
 	private void createCharacter(CHARACTER choosenCharacter) {
 		character = new ImageView(choosenCharacter.getUrl());
+		character.setFitHeight(70);
+		character.setFitWidth(70);
 		character.setLayoutX(0);
 		character.setLayoutY(GAME_HEIGHT - 130);
+		
 		gamePane.getChildren().add(character);
 	}
 
@@ -378,8 +265,10 @@ public class GameViewManager {
 		}
 
 		gridPane2.setLayoutY(-1024);
-
-		gamePane.getChildren().addAll(gridPane1, gridPane2);
+		VBox box = new VBox();
+		box.getChildren().add(gamePane);
+		backPane.getChildren().addAll(gridPane1, gridPane2, box);
+		
 	}
 
 	private void moveBackground() {
@@ -431,14 +320,6 @@ public class GameViewManager {
 		return gameViewManager;
 	}
 
-	public void setZeichnung(Zeichnung zeichnung) {
-		this.zeichnung = zeichnung;
-	}
-
-	public Zeichnung getZeichnung() {
-		return zeichnung;
-	}
-
 	public int getAnfangKarte() {
 		return anfangKarte;
 	}
@@ -453,6 +334,18 @@ public class GameViewManager {
 
 	public void setZeit(int zeit) {
 		this.zeit = zeit;
+	}
+
+	public void setKarte(Karte karte) {
+		this.karte = karte;
+	}
+
+	public static int getTime() {
+		return time;
+	}
+
+	public static void setPoints(int time) {
+		GameViewManager.time = time;
 	}
 
 	public int getZeit() {

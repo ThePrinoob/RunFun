@@ -118,8 +118,7 @@ public class Bilder {
 //            bildLinks = ImageIO.read(getClass().getResource("textures/housi_links.png"));
 //            bildRechts = ImageIO.read(getClass().getResource("textures/housi_rechts.png"));
 //            bildLeertaste = ImageIO.read(getClass().getResource("textures/housi_leertaste.png"));
-              file = new File("textures/housi_esc.png");
-              Image bildEsc = new Image(file.toURI().toString());
+              bildEsc = new Image(getClass().getResourceAsStream("textures/housi_esc.png"));
               
 //            iconHousi = ImageIO.read(getClass().getResource("textures/housi_icon.png"));
 //            // Bilder Spielfiguren          
