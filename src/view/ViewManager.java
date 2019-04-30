@@ -1,26 +1,17 @@
 package view;
 
 import java.applet.AudioClip;
-import java.io.File;
 import java.util.ArrayList;
-//import java.util.HashMap;
 import java.util.List;
-
-import javax.swing.JCheckBox;
 
 import application.Person;
 import javaDB.FunRunSelect;
-//
-//import Audio.AudioPlayer;
-import javaDB.RunFunInsert;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-//import javafx.scene.input.KeyCode;
-//import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -28,9 +19,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -40,10 +28,9 @@ import model.InfoLabel;
 import model.InfoLabel2;
 import model.RunFunButton;
 import model.RunFunSubScene;
-import net.ictcampus.RunFun.domain.highscore;
 
 public class ViewManager {
-    private static final int WIDTH = 1080, HEIGHT = 720;
+    private static final int WIDTH = 1040, HEIGHT = 700;
     private final static int MENU_BUTTONS_START_X = 450;
     private final static int MENU_BUTTONS_START_Y = 250;
 
@@ -58,7 +45,6 @@ public class ViewManager {
     private RunFunSubScene sceneToHide;
 
     private AudioClip bangClip;
-    private JCheckBox effectOn;
 
     // private RunFunSubScene creditsSubScene;
 
@@ -80,10 +66,11 @@ public class ViewManager {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
+        mainStage.setTitle("RunFun");
+        mainStage.setResizable(false);
         mainStage.setScene(mainScene);
         createButtons();
         createSubScenes();
-
         createBackground();
 
         

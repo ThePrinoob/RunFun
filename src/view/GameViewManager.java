@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.CHARACTER;
@@ -96,6 +98,7 @@ public class GameViewManager {
                             break;
                         case "164":
                         	imv = new ImageView(bildErde);
+                        	imv.resize(200, 200);
                         	gamePane.add(imv, zeilenNummer, spaltenNummer);
                             break;
                         case "145":
@@ -158,18 +161,23 @@ public class GameViewManager {
 
 	private void initializeStage() {
 		gamePane = new GridPane();
+		gamePane.setMaxSize(1920, 1080);
+		gamePane.setMinSize(1920, 1080);
 		backPane = new AnchorPane();
 		VBox box = new VBox();
 		gameScene = new Scene(backPane, GAME_WIDTH, GAME_HEIGHT);
 		gameStage = new Stage();
+		gameStage.setFullScreen(true);
+		gameStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		gameStage.setResizable(false);
 		gameStage.setScene(gameScene);
 	}
 
 	public void createNewGame(Stage menuStage, CHARACTER choosenCharacter) {
 		this.menuStage = menuStage;
 		this.menuStage.hide();
-		createBackground();
 		createCharacter(choosenCharacter);
+		createBackground();
 //      createGameElements(choosenCharacter);
 		createGameLoop();
 		gameStage.show();
@@ -180,7 +188,6 @@ public class GameViewManager {
 
 			@Override
 			public void handle(long arg0) {
-				// TODO Auto-generated method stub
 				moveCharacter();
 				characterRun();
 			}
@@ -191,18 +198,10 @@ public class GameViewManager {
 	private void createCharacter(CHARACTER choosenCharacter) {
 		character = new ImageView(choosenCharacter.getUrl());
 		character.setFitHeight(70);
-		character.setFitWidth(70);
-		character.setLayoutX(0);
-		character.setLayoutY(GAME_HEIGHT - 130);
-		
-		gamePane.getChildren().add(character);
+		character.setFitWidth(70);		
 	}
 
 	private void createBotPlayers(CHARACTER choosenCharacter) {
-
-	}
-
-	private void moveGameElements() {
 
 	}
 
@@ -215,6 +214,7 @@ public class GameViewManager {
 			angle += 5;
 		}
 		character.setRotate(angle);
+		moveBackground();
 		if (character.getLayoutX() < 950) {
 			character.setLayoutX(character.getLayoutX() + 7);
 		}
@@ -227,6 +227,7 @@ public class GameViewManager {
 				angle -= 5;
 			}
 			character.setRotate(angle);
+			
 			if (character.getLayoutX() > -20) {
 				character.setLayoutX(character.getLayoutX() - 7);
 			}
@@ -264,23 +265,23 @@ public class GameViewManager {
 			gridPane2.getChildren().add(backgroundImage2);
 		}
 
-		gridPane2.setLayoutY(-1024);
+		gridPane2.setLayoutX(1024);
 		VBox box = new VBox();
 		box.getChildren().add(gamePane);
+		box.getChildren().add(character);
 		backPane.getChildren().addAll(gridPane1, gridPane2, box);
 		
 	}
 
 	private void moveBackground() {
-		gridPane1.setLayoutY(gridPane1.getLayoutY() + 1);
-		gridPane2.setLayoutY(gridPane2.getLayoutY() + 1);
-
-		if (gridPane1.getLayoutY() >= 1024) {
-			gridPane1.setLayoutY(-1024);
+		gridPane1.setLayoutX(gridPane1.getLayoutX() - 10);
+		gridPane2.setLayoutX(gridPane2.getLayoutX() - 10);
+		if (gridPane1.getLayoutX() < -1024) {
+			gridPane1.setLayoutX(0);
 		}
 
-		if (gridPane2.getLayoutY() >= 1024) {
-			gridPane2.setLayoutY(-1024);
+		if (gridPane2.getLayoutX() < 0) {
+			gridPane2.setLayoutX(1024);
 		}
 	}
 
