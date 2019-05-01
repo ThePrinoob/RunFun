@@ -276,6 +276,7 @@ public class GameViewManager {
         }
 
         character.setRotate(angle);
+//        character.setLayoutX(character.getLayoutX() + 7);
 //      moveBackground();
 
         // -------------------------------------------------
@@ -284,21 +285,16 @@ public class GameViewManager {
         character.setLayoutY(character.getLayoutY() + modY);
 
         int column = (int) (character.getLayoutX() / 125);
-        int  row= (int) (character.getLayoutY() / 125);
+        int row = (int) (character.getLayoutY() / 125);
         boolean foundGround = false;
-        if (blocks[row+1][column] != 154 || blocks[row+1][column] != 133) {
+        if (blocks[row + 1][column] != 154 || blocks[row + 1][column] != 133) {
             for (int i = 1; i < 9; i++) {
-                if (blocks[row+1][column] != 154 || blocks[row+1][column] != 133) {
-                    
-                
-                if (row+i<10 && !foundGround ) {
+                if (row + i < 10 && !foundGround) {
                     if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
                         foundGround = true;
-                         character.setLayoutY(character.getLayoutY() + 125);
+                        character.setLayoutY(character.getLayoutY() + 125);
                         character.setLayoutX(character.getLayoutX() + 7);
-    
                     }
-                }
                 }
             }
         } else {
@@ -379,6 +375,8 @@ public class GameViewManager {
         pane.getChildren().addAll(gridPane1, gridPane2);
 
         pane2.getChildren().add(character);
+        character.setLayoutX(124);
+        character.setLayoutY(500);
         stackPane.getChildren().addAll(pane, gamePane, pane2);
 
     }
