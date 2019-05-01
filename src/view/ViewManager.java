@@ -1,6 +1,5 @@
 package view;
 
-import java.applet.AudioClip;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,9 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -28,6 +30,9 @@ import model.InfoLabel;
 import model.InfoLabel2;
 import model.RunFunButton;
 import model.RunFunSubScene;
+
+import java.io.*;
+import sun.audio.*;
 
 public class ViewManager {
     private static final int WIDTH = 1040, HEIGHT = 700;
@@ -217,6 +222,7 @@ public class ViewManager {
                        
                         GameViewManager gameManager = new GameViewManager();
                         gameManager.createNewGame(mainStage, choosenCharacter);
+                        
                     }
                     else {
                         Label labelresponse2= new Label();
@@ -269,29 +275,12 @@ public class ViewManager {
             @Override
             public void handle(ActionEvent event) {
                 showSubScene(characterChooserScene);
-//                sfx = new HashMap<String, AudioPlayer>();
-//                sfx.put("choose", new AudioPlayer(
-//                        "./sfx/chooseyourcharacter.mp3"));
-//                sfx.get("choose").play();
-//                String musicFile = "./sfx/chooseyourcharacter.mp3";     // For example
-//
-//                Media sound = new Media(new File(musicFile).toURI().toString());
-//                MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//                mediaPlayer.play();
-//               AudioClip note = new AudioClip(this.getClass().getResource("chooseyourcharacter.wav").toString());
-//               note.play(100);
-                
-//                URL clipUrl = getClass().getResource("chooseyourcharacter.wav");
-//                if(clipUrl == null) {
-//                    effectOn.setSelected(false);
-//                    effectOn.setEnabled(false);
-//                }
-//                else
-//                    setBangClip(Applet.newAudioClip(clipUrl));
 
-                
-               
+                String musicFile = "src/choose.mp3";     // For example
 
+                Media sound = new Media(new File(musicFile).toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();                
             }
         });
     }
