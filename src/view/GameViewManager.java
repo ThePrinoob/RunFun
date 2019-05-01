@@ -288,8 +288,8 @@ public class GameViewManager {
         int row = (int) (character.getLayoutY() / 125);
         boolean foundGround = false;
         if (blocks[row + 1][column] != 154 || blocks[row + 1][column] != 133) {
-            for (int i = 1; i < 9; i++) {
-                if (row + i < 10 && !foundGround) {
+            for (int i = 1; i < 6; i++) {
+                if (row + i < 7 && !foundGround) {
                     if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
                         foundGround = true;
                         character.setLayoutY(character.getLayoutY() + 125);
