@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -258,6 +259,10 @@ public class GameViewManager {
         if (angle < 30) {
             angle += 5;
         }
+
+        // Wo ist der Charakter
+        Node test = gamePane.getChildren().get(2);
+        System.out.println(test);
         character.setRotate(angle);
 //      moveBackground();
         character.setLayoutX(character.getLayoutX() + 7);
