@@ -216,6 +216,11 @@ public class ViewManager {
                         GameViewManager gameManager = new GameViewManager();
                         gameManager.createNewGame(mainStage, choosenCharacter);
 
+                        String musicFile2 = "src/sounds/backgroundMusic.mp3"; // For example
+
+                        Media sound2 = new Media(new File(musicFile2).toURI().toString());
+                        MediaPlayer mediaPlayer2 = new MediaPlayer(sound2);
+                        mediaPlayer2.play();
                     } else {
                         Label labelresponse2 = new Label();
                         labelresponse2.setLayoutX(180);
@@ -224,6 +229,7 @@ public class ViewManager {
                         labelresponse2.setText(
                                 "Du musst einen Charakter auswählen, um das Spiel zu starten");
                         characterChooserScene.getPane().getChildren().add(labelresponse2);
+                        
                     }
                 }
             }

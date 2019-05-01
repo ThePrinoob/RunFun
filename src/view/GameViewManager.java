@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
@@ -12,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import model.CHARACTER;
 import model.Karte;
@@ -142,8 +145,11 @@ public class GameViewManager {
                     }
                     spaltenNummer++;
                 }
+                
             }
+            
         }.start();
+        
     }
 
     /**
@@ -183,6 +189,8 @@ public class GameViewManager {
         gameStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         gameStage.setResizable(false);
         gameStage.setScene(gameScene);
+        
+        
     }
 
     /**
@@ -199,6 +207,13 @@ public class GameViewManager {
 //      createGameElements(choosenCharacter);
         createGameLoop();
         gameStage.show();
+        
+        String musicFile2 = "src/sounds/backgroundMusic.mp3"; // For example
+
+        Media sound2 = new Media(new File(musicFile2).toURI().toString());
+        MediaPlayer mediaPlayer2 = new MediaPlayer(sound2);
+        mediaPlayer2.play();
+        
     }
 
     /**
