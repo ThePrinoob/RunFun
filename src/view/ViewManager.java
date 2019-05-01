@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import javaDB.FunRunSelect;
 import javaDB.RunFunInsert;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -33,10 +32,6 @@ import model.InfoLabel;
 import model.InfoLabel2;
 import model.RunFunButton;
 import model.RunFunSubScene;
-import model.ScoreLabel;
-
-import java.io.*;
-import sun.audio.*;
 
 public class ViewManager {
     private static final int WIDTH = 1040, HEIGHT = 700;
