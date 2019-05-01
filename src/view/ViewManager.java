@@ -275,7 +275,6 @@ public class ViewManager {
             @Override
             public void handle(ActionEvent event) {
                 showSubScene(characterChooserScene);
-
                 String musicFile = "src/choose.mp3";     // For example
 
                 Media sound = new Media(new File(musicFile).toURI().toString());

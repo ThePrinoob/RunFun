@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.CHARACTER;
@@ -45,21 +45,26 @@ public class GameViewManager {
 
     // Map images
     private Image bildAbschraegungLinks = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"), 125,
+            125, false, false);
     private Image bildErdeOben = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"), 125, 125,
+            false, false);
     private Image bildErdeRechts = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"), 125, 125,
+            false, false);
     private Image bildErde = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_erde.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_erde.png"), 125, 125, false,
+            false);
     private Image bildPunktRechtsOben = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"));
-    private Image bildBg = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_bg.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"), 125, 125,
+            false, false);
     private Image bildRutscheUnten = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"), 125, 125,
+            false, false);
     private Image bildErdeLinks = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"));
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"), 125, 125,
+            false, false);
 
     private ImageView imv;
 
@@ -69,7 +74,7 @@ public class GameViewManager {
     private double beschleunigungY = 2;
 
     private int anfangKarte = 0;
-    private int anzahlBloecke = 20;
+    private int anzahlBloecke = 21;
     private int mitschiebenKarte = 0;
     private int laengeKartenArray;
     private int zeit = 0;
@@ -82,11 +87,13 @@ public class GameViewManager {
         buildMap();
     }
 
+    /**
+     * Map erstellen und Blöcke anzeigen
+     */
     private void buildMap() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-
                 int spaltenNummer = 0;
                 for (String[] zeile : getKarte().getKarteListe()) {
                     setLaengeKartenArray(zeile.length);
@@ -101,28 +108,27 @@ public class GameViewManager {
                             break;
                         case "131":
                             imv = new ImageView(bildErdeRechts);
-                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
                             break;
                         case "164":
                             imv = new ImageView(bildErde);
-                            imv.resize(200, 200);
-                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
                             break;
                         case "145":
                             imv = new ImageView(bildPunktRechtsOben);
-                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
                             break;
                         case "154":
                             imv = new ImageView(bildErdeOben);
-                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
                             break;
                         case "133":
                             imv = new ImageView(bildRutscheUnten);
-                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
                             break;
                         case "138":
                             imv = new ImageView(bildErdeLinks);
-                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
                             break;
 
                         // Blöcke Decko
@@ -136,14 +142,13 @@ public class GameViewManager {
                     }
                     spaltenNummer++;
                 }
-//                g.drawImage(bildFigur, getPosX(), getPosY(), null);
-//                g.setFont(new Font("Orbitron", Font.PLAIN, 50));
-//                g.setColor(Color.yellow);
-//                g.drawString((getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "." + (getZeit() % 100) / 10, 20, 40);
             }
         }.start();
     }
 
+    /**
+     * Key Listener erstellen
+     */
     private void createKeyListeners() {
 
         gameScene.setOnKeyPressed(event -> {
@@ -164,12 +169,14 @@ public class GameViewManager {
 
     }
 
+    /**
+     * Game Fenster initalisieren
+     */
     private void initializeStage() {
         gamePane = new GridPane();
         gamePane.setMaxSize(1920, 1080);
         gamePane.setMinSize(1920, 1080);
         backPane = new AnchorPane();
-        VBox box = new VBox();
         gameScene = new Scene(backPane, GAME_WIDTH, GAME_HEIGHT);
         gameStage = new Stage();
         gameStage.setFullScreen(true);
@@ -178,6 +185,12 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
     }
 
+    /**
+     * Neues Game erstellen und alles starten.
+     * 
+     * @param menuStage
+     * @param choosenCharacter
+     */
     public void createNewGame(Stage menuStage, CHARACTER choosenCharacter) {
         this.menuStage = menuStage;
         this.menuStage.hide();
@@ -188,6 +201,9 @@ public class GameViewManager {
         gameStage.show();
     }
 
+    /**
+     * Durchgehend Character rennen lassen
+     */
     private void createGameLoop() {
         gameTimer = new AnimationTimer() {
 
@@ -200,29 +216,36 @@ public class GameViewManager {
         gameTimer.start();
     }
 
+    /**
+     * Character
+     * 
+     * @param choosenCharacter
+     */
     private void createCharacter(CHARACTER choosenCharacter) {
         character = new ImageView(choosenCharacter.getUrl());
+        character.resize(125, 125);
         character.setFitHeight(70);
         character.setFitWidth(70);
     }
 
-    private void createBotPlayers(CHARACTER choosenCharacter) {
+//    private void createBotPlayers(CHARACTER choosenCharacter) {
+//
+//    }
+//
+//    private void checkIfTheCharacterIsBeforeAMountainAndEnable() {
+//
+//    }
 
-    }
-
-    private void checkIfTheCharacterIsBeforeAMountainAndEnable() {
-
-    }
-
+    /**
+     * Character rennen lassen
+     */
     private void characterRun() {
         if (angle < 30) {
             angle += 5;
         }
         character.setRotate(angle);
 //      moveBackground();
-        if (character.getLayoutX() < 950) {
-            character.setLayoutX(character.getLayoutX() + 7);
-        }
+        character.setLayoutX(character.getLayoutX() + 7);
         if (getAnfangKarte() < getLaengeKartenArray() - getAnzahlBloecke()) {
             if (getPosX() > 8 * getBreiteBlock()) {
                 setMitschiebenKarte(getMitschiebenKarte() - getGeschwindigkeit());
@@ -238,6 +261,9 @@ public class GameViewManager {
         }
     }
 
+    /**
+     * Character bewegen
+     */
     private void moveCharacter() {
 
         if (isUpKeyPressed && !isDownKeyPressed) {
@@ -270,6 +296,9 @@ public class GameViewManager {
 
     }
 
+    /**
+     * Hintergrund erstellen
+     */
     private void createBackground() {
         gridPane1 = new GridPane();
         gridPane2 = new GridPane();
@@ -285,12 +314,15 @@ public class GameViewManager {
 
         gridPane2.setLayoutX(1024);
         VBox box = new VBox();
-        box.getChildren().add(character);
+        Pane pane = new Pane();
+        pane.getChildren().add(character);
+        box.getChildren().add(pane);
         box.getChildren().add(gamePane);
         backPane.getChildren().addAll(gridPane1, gridPane2, box);
 
     }
 
+    @SuppressWarnings("unused")
     private void moveBackground() {
         gridPane1.setLayoutX(gridPane1.getLayoutX() - 10);
         gridPane2.setLayoutX(gridPane2.getLayoutX() - 10);
