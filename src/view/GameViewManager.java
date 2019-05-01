@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +12,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,6 +28,9 @@ public class GameViewManager {
     Random randomPositionGenerator;
     private GridPane gamePane;
     private AnchorPane backPane;
+    private StackPane stackPane;
+    private VBox box;
+    private int[][] blocks = new int[10][22]; // 11 Zeilen und 22 Spalten
     private Scene gameScene;
     private Stage gameStage;
     private Stage menuStage;
@@ -102,6 +105,7 @@ public class GameViewManager {
                 for (String[] zeile : getKarte().getKarteListe()) {
                     setLaengeKartenArray(zeile.length);
                     int zeilenNummer = 0;
+//                    System.out.println(zeilenNummer + " " + spaltenNummer);
                     for (int i = getAnfangKarte(); i < getAnfangKarte() + getAnzahlBloecke(); i++) {
                         String block = zeile[i];
                         switch (block) {
@@ -109,34 +113,43 @@ public class GameViewManager {
                         case "-20":
                             imv = new ImageView(bildAbschraegungLinks);
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = -20;
                             break;
                         case "131":
                             imv = new ImageView(bildErdeRechts);
-                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 131;
                             break;
                         case "164":
                             imv = new ImageView(bildErde);
-                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 164;
+                            System.out.println(zeilenNummer + " " + spaltenNummer);
+
                             break;
                         case "145":
                             imv = new ImageView(bildPunktRechtsOben);
-                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 145;
                             break;
                         case "154":
                             imv = new ImageView(bildErdeOben);
-                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 154;
                             break;
                         case "133":
                             imv = new ImageView(bildRutscheUnten);
-                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 133;
                             break;
                         case "138":
                             imv = new ImageView(bildErdeLinks);
-                            gamePane.add(imv, zeilenNummer + getAnfangKarte(), spaltenNummer);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 138;
                             break;
 
                         // Blöcke Decko
-                        case "0":
+                        case "000":
                             break;
 
                         default:
@@ -146,11 +159,17 @@ public class GameViewManager {
                     }
                     spaltenNummer++;
                 }
-                
+                for (int zeile = 0; zeile < blocks.length; zeile++) {
+                    System.out.print("Zeile " + zeile + ": ");
+                    for (int spalte = 0; spalte < blocks[zeile].length; spalte++)
+                        System.out.print(blocks[zeile][spalte] + " ");
+                    System.out.println();
+                }
+
             }
-            
+
         }.start();
-        
+
     }
 
     /**
@@ -183,15 +202,14 @@ public class GameViewManager {
         gamePane = new GridPane();
         gamePane.setMaxSize(1920, 1080);
         gamePane.setMinSize(1920, 1080);
-        backPane = new AnchorPane();
-        gameScene = new Scene(backPane, GAME_WIDTH, GAME_HEIGHT);
+        stackPane = new StackPane();
+        gameScene = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
         gameStage = new Stage();
         gameStage.setFullScreen(true);
         gameStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        gameStage.setResizable(false);
+        gameStage.setResizable(true);
         gameStage.setScene(gameScene);
-        
-        
+
     }
 
     /**
@@ -208,13 +226,13 @@ public class GameViewManager {
 //      createGameElements(choosenCharacter);
         createGameLoop();
         gameStage.show();
-        
+
         String musicFile2 = "src/sounds/backgroundMusic.mp3"; // For example
 
         Media sound2 = new Media(new File(musicFile2).toURI().toString());
         MediaPlayer mediaPlayer2 = new MediaPlayer(sound2);
         mediaPlayer2.play();
-        
+
     }
 
     /**
@@ -239,9 +257,6 @@ public class GameViewManager {
      */
     private void createCharacter(CHARACTER choosenCharacter) {
         character = new ImageView(choosenCharacter.getUrl());
-        character.resize(125, 125);
-        character.setFitHeight(70);
-        character.setFitWidth(70);
     }
 
 //    private void createBotPlayers(CHARACTER choosenCharacter) {
@@ -260,25 +275,51 @@ public class GameViewManager {
             angle += 5;
         }
 
-        // Wo ist der Charakter
-        Node test = gamePane.getChildren().get(2);
-        System.out.println(test);
         character.setRotate(angle);
 //      moveBackground();
-        character.setLayoutX(character.getLayoutX() + 7);
-        if (getAnfangKarte() < getLaengeKartenArray() - getAnzahlBloecke()) {
-            if (getPosX() > 8 * getBreiteBlock()) {
-                setMitschiebenKarte(getMitschiebenKarte() - getGeschwindigkeit());
-                // Verhindert das permanente Mitschieben der Karte, wenn der
-                // Spieler die Mitte erreicht hat.
-                setPosX(getPosX() - getGeschwindigkeit());
-                // Wenn ein ganzer neuer Block dargestellt wurde...
-                if (getMitschiebenKarte() <= -120) {
-                    setMitschiebenKarte(getMitschiebenKarte() + 120);
-                    setAnfangKarte(getAnfangKarte() + 1);
+
+        // -------------------------------------------------
+
+        double modY = character.getLayoutY() % 125;
+        character.setLayoutY(character.getLayoutY() + modY);
+
+        int column = (int) (character.getLayoutX() / 125);
+        int  row= (int) (character.getLayoutY() / 125);
+        boolean foundGround = false;
+        if (blocks[row+1][column] != 154 || blocks[row+1][column] != 133) {
+            for (int i = 1; i < 9; i++) {
+                if (blocks[row+1][column] != 154 || blocks[row+1][column] != 133) {
+                    
+                
+                if (row+i<10 && !foundGround ) {
+                    if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
+                        foundGround = true;
+                         character.setLayoutY(character.getLayoutY() + 125);
+                        character.setLayoutX(character.getLayoutX() + 7);
+    
+                    }
+                }
                 }
             }
+        } else {
+            character.setLayoutX(character.getLayoutX() + 7);
+
         }
+
+        // -------------------------------------------------
+//        if (getAnfangKarte() < getLaengeKartenArray() - getAnzahlBloecke()) {
+//            if (getPosX() > 8 * getBreiteBlock()) {
+//                setMitschiebenKarte(getMitschiebenKarte() - getGeschwindigkeit());
+//                // Verhindert das permanente Mitschieben der Karte, wenn der
+//                // Spieler die Mitte erreicht hat.
+//                setPosX(getPosX() - getGeschwindigkeit());
+//                // Wenn ein ganzer neuer Block dargestellt wurde...
+//                if (getMitschiebenKarte() <= -120) {
+//                    setMitschiebenKarte(getMitschiebenKarte() + 120);
+//                    setAnfangKarte(getAnfangKarte() + 1);
+//                }
+//            }
+//        }
     }
 
     /**
@@ -333,12 +374,12 @@ public class GameViewManager {
         }
 
         gridPane2.setLayoutX(1024);
-        VBox box = new VBox();
         Pane pane = new Pane();
-        pane.getChildren().add(character);
-        box.getChildren().add(pane);
-        box.getChildren().add(gamePane);
-        backPane.getChildren().addAll(gridPane1, gridPane2, box);
+        Pane pane2 = new Pane();
+        pane.getChildren().addAll(gridPane1, gridPane2);
+
+        pane2.getChildren().add(character);
+        stackPane.getChildren().addAll(pane, gamePane, pane2);
 
     }
 
