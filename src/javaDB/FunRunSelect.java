@@ -101,7 +101,7 @@ public class FunRunSelect {
         // Ausgeben der ausgelesenen Spieler
         for (Person p : player) {
             System.out
-                    .println( p.getBenutzername() + p.getMaxPunkte());
+                    .println( p.getBenutzername() + p.getTime());
         }
     }
 }

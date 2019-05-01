@@ -1,6 +1,8 @@
 package application;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javaDB.FunRunSelect;
 //imports
@@ -34,6 +36,12 @@ public class Main extends Application {
     public static void main(String[] args) {
         
         launch(args);
-    }
+//        List<Person> player = new ArrayList<>();
+//        FunRunSelect select = new FunRunSelect();
+//        player = select.selectPlayerDB();
+//        // Ausgeben der ausgelesenen Spieler
+//        for (Person p : player) {
+//            System.out.println( p.getBenutzername() + p.getTime());
+  //  }
 
-}
+}}

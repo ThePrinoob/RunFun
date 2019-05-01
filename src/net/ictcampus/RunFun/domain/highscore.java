@@ -23,7 +23,7 @@ public class highscore {
         // Ausgeben der ausgelesenen Spieler
         for (Person p : person) {
             name.setText(name.getText() + "\n" + podest + ". " + p.getBenutzername());
-            punkte.setText(punkte.getText() + "\n" + p.getMaxPunkte());
+            punkte.setText(punkte.getText() + "\n" + p.getTime());
             podest++;
         }
 

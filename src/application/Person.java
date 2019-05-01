@@ -5,12 +5,12 @@ import java.sql.Time;
 public class Person {
   //Instanzvariabeln
     private String benutzername;
-    private Time maxPunkte;
+    private Time time;
     
     //Konstruktor
     public Person(String benutzername, Time zeit) {
         this.setBenutzername(benutzername);
-        this.setMaxPunkte(zeit);
+        this.setTime(zeit);
     }
 
 
@@ -23,11 +23,11 @@ public class Person {
         this.benutzername = benutzername;
     }
 
-    public Time getMaxPunkte() {
-        return maxPunkte;
+    public Time getTime() {
+        return time;
     }
 
-    public void setMaxPunkte(Time zeit) {
-        this.maxPunkte = zeit;
+    public void setTime(Time zeit) {
+        this.time = zeit;
     }    
 }

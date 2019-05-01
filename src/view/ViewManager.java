@@ -5,8 +5,10 @@ import java.util.List;
 
 import application.Person;
 import javaDB.FunRunSelect;
+import javaDB.RunFunInsert;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -30,6 +33,7 @@ import model.InfoLabel;
 import model.InfoLabel2;
 import model.RunFunButton;
 import model.RunFunSubScene;
+import model.ScoreLabel;
 
 import java.io.*;
 import sun.audio.*;
@@ -56,7 +60,7 @@ public class ViewManager {
 //    String hitNormal = ("choose_your_character.mp3");
 //    Media sound = new Media(new File(hitNormal).toURI().toString());
 //    MediaPlayer mediaPlayer = new MediaPlayer(sound);
- 
+
     List<RunFunButton> menuButtons;
 
     List<CharacterPicker> characterList;
@@ -78,22 +82,21 @@ public class ViewManager {
         createSubScenes();
         createBackground();
 
-        
 //        mainPane.setOnKeyPressed(e -> {
 //            if (e.getCode() == KeyCode.K) {
 //                ViewManager manager = new ViewManager();
 //                primaryStage = manager.getMainStage();
 //                primaryStage.show();
 //             //mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-           
+
 //             @Override
 //             public void handle (KeyEvent event) {
 ////                 ViewManager manager = new ViewManager();
 ////                 
 //                
 //             }
-             
-        // });  
+
+        // });
     }
 //public void start(Stage primaryStage) {
 //    
@@ -110,12 +113,6 @@ public class ViewManager {
 //         }
 //      
 //     }}); 
-    
-    
-    
-
-    
-
 
     private void showSubScene(RunFunSubScene subScene) {
         if (sceneToHide != null) {
@@ -137,8 +134,6 @@ public class ViewManager {
 
     }
 
-    
-
     public void createCharacterChooserSubScene() {
         characterChooserScene = new RunFunSubScene();
         mainPane.getChildren().add(characterChooserScene);
@@ -154,7 +149,7 @@ public class ViewManager {
 //        myText = name.getText();
 
         characterChooserScene.getPane().getChildren().add(chooseCharacterLabel);
-        //characterChooserScene.getPane().getChildren().add(name);
+        // characterChooserScene.getPane().getChildren().add(name);
         characterChooserScene.getPane().getChildren().add(createCharacterToChoose());
         characterChooserScene.getPane().getChildren().add(createButtonToStart());
 
@@ -186,7 +181,6 @@ public class ViewManager {
         return box;
     }
 
-
     public RunFunButton createButtonToStart() {
         RunFunButton startButton = new RunFunButton("Start");
         startButton.setLayoutX(400);
@@ -197,46 +191,43 @@ public class ViewManager {
         name.setLayoutY(100);
         name.setPrefSize(500, 50);
         name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        
+
         username = name.getText();
-        
+
         characterChooserScene.getPane().getChildren().add(name);
-        
+
         startButton.setOnAction(new EventHandler<ActionEvent>() {
 //
-           @Override
+            @Override
             public void handle(ActionEvent event) {
                 if (name.getText().isEmpty()) {
-                    Label labelresponse= new Label();
+                    Label labelresponse = new Label();
                     labelresponse.setLayoutX(200);
                     labelresponse.setLayoutY(175);
                     labelresponse.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
                     labelresponse.setText("Du musst einen Namen eingeben, um das Spiel zu starten");
                     characterChooserScene.getPane().getChildren().add(labelresponse);
-                }
-                else {
-                   if (choosenCharacter != null) {
-                       
-                       //RunFunInsert dao = new RunFunInsert();  
-                       //dao.insertPlayerDB(name.getText());
-                       
+                } else {
+                    if (choosenCharacter != null) {
+
+                        RunFunInsert dao = new RunFunInsert();
+                        dao.insertPlayerDB(name.getText());
+
                         GameViewManager gameManager = new GameViewManager();
                         gameManager.createNewGame(mainStage, choosenCharacter);
-                        
-                    }
-                    else {
-                        Label labelresponse2= new Label();
+
+                    } else {
+                        Label labelresponse2 = new Label();
                         labelresponse2.setLayoutX(180);
                         labelresponse2.setLayoutY(225);
                         labelresponse2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-                        labelresponse2.setText("Du musst einen Charakter auswählen, um das Spiel zu starten");
+                        labelresponse2.setText(
+                                "Du musst einen Charakter auswählen, um das Spiel zu starten");
                         characterChooserScene.getPane().getChildren().add(labelresponse2);
-                   }
-               }
-           }
-           });
-        
-        
+                    }
+                }
+            }
+        });
 
         return startButton;
     }
@@ -271,20 +262,20 @@ public class ViewManager {
         addMenuButton(startButton);
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
                 showSubScene(characterChooserScene);
-                String musicFile = "src/choose.mp3";     // For example
+
+                String musicFile = "src/sounds/loose.mp3"; // For example
 
                 Media sound = new Media(new File(musicFile).toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();                
+                mediaPlayer.play();
             }
         });
     }
-    
-    
+
 //    private void setEffectOn() {
 //        effectOn = new JCheckBox("Sound Effects    ", true);
 //        effectOn.setBackground(new Color(0, 0, 0, 0)); // Transparent background.
@@ -292,7 +283,6 @@ public class ViewManager {
 //        effectOn.setFocusable(false);
 //    }
 
-    
     private void createScoreButton() {
         RunFunButton highscoreButton = new RunFunButton("SCORE");
         addMenuButton(highscoreButton);
@@ -301,14 +291,24 @@ public class ViewManager {
             @Override
             public void handle(ActionEvent event) {
                 showSubScene(highscoreSubScene);
-                
-                 
+
                 Label score = new Label();
+
+                score.setLayoutX(150);
+                score.setLayoutY(150);
+                score.setFont(Font.font ("Verdana", FontWeight.BOLD, 50));
+                
+                Label time = new Label();
+                
+               
+                // setPadding(new Insets(40,40,40,40));
                 
                 
-                score.setLayoutX(260);
-                score.setLayoutY(500);
-                
+                time.setLayoutX(500);
+                time.setLayoutY(150);
+                time.setFont(Font.font ("Verdana", FontWeight.BOLD, 50));
+                //time.setTextFill(Color.RED);
+
                 List<Person> person = new ArrayList<>();
 
                 // Objekt erstellen
@@ -316,14 +316,25 @@ public class ViewManager {
                 person = select.selectPlayerDB();
 
                 // Ausgeben der ausgelesenen Spieler
-                score.setText("lel");
-                
-                highscoreSubScene.getPane().getChildren().add(score);
-                
-                 
+                //score.setText("lel");
+
+                int podest = 1;
+
+                // Liste mit den Personen
+
+                // Ausgeben der ausgelesenen Spieler
+                for (Person p : person) {
+                    score.setText(score.getText() + "\n" + podest + ". " + p.getBenutzername());
+                    time.setText(time.getText() + "\n" + p.getTime());
+                    podest++;
                 }
+
+                highscoreSubScene.getPane().getChildren().add(score);
+                highscoreSubScene.getPane().getChildren().add(time);
+
+            }
         });
-        }
+    }
 
 //    private void createHelpButton() {
 //        RunFunButton helpButton = new RunFunButton("HELP");
@@ -340,35 +351,32 @@ public class ViewManager {
             @Override
             public void handle(ActionEvent event) {
                 showSubScene(creditsSubScene);
-                
-                
 
-                
                 InfoLabel2 credits = new InfoLabel2("Dieses Programm wurde von:");
                 credits.setLayoutX(260);
                 credits.setLayoutY(100);
-                
+
                 InfoLabel2 mika = new InfoLabel2("Mika");
                 mika.setLayoutX(260);
                 mika.setLayoutY(200);
-                
+
                 InfoLabel2 und = new InfoLabel2("und");
                 und.setLayoutX(260);
                 und.setLayoutY(300);
-                
+
                 InfoLabel2 dominik = new InfoLabel2("Dominik");
                 dominik.setLayoutX(260);
                 dominik.setLayoutY(400);
-                
+
                 InfoLabel2 entwickelt = new InfoLabel2("entwickelt");
                 entwickelt.setLayoutX(260);
                 entwickelt.setLayoutY(500);
-                
+
                 creditsSubScene.getPane().getChildren().add(credits);
                 creditsSubScene.getPane().getChildren().add(mika);
                 creditsSubScene.getPane().getChildren().add(und);
                 creditsSubScene.getPane().getChildren().add(dominik);
-                
+
                 creditsSubScene.getPane().getChildren().add(entwickelt);
             }
         });
@@ -382,7 +390,7 @@ public class ViewManager {
 
             @Override
             public void handle(ActionEvent event) {
-               
+
                 mainStage.close();
             }
 
@@ -398,27 +406,12 @@ public class ViewManager {
         mainPane.setBackground(new Background(background));
     }
 
-
-
-
-
-
-
     public AudioClip getBangClip() {
         return bangClip;
     }
-
-
-
-
-
-
 
     public void setBangClip(AudioClip bangClip) {
         this.bangClip = bangClip;
     }
 
-
 }
-
-
