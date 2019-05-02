@@ -32,7 +32,7 @@ public class GameViewManager {
     private StackPane stackPane;
     private Pane nameBox;
     private Label username2;
-    private int[][] blocks = new int[10][22]; // 11 Zeilen und 22 Spalten
+    private int[][] blocks = new int[10][150]; // 11 Zeilen und 22 Spalten
     private Scene gameScene;
     private Stage gameStage;
     private Stage menuStage;
@@ -84,10 +84,10 @@ public class GameViewManager {
     private double beschleunigungY = 2;
 
     private int anfangKarte = 0;
-    private int anzahlBloecke = 21;
+    private int anzahlBloecke = 50;
     private int mitschiebenKarte = 0;
     private int laengeKartenArray;
-    private static int zeit = 0;
+    private int zeit = 0;
     private boolean zeitLaeuft = false;
 
     public GameViewManager() {
@@ -128,7 +128,7 @@ public class GameViewManager {
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
                             blocks[spaltenNummer][zeilenNummer] = 164;
                             break;
-                        case "145":
+                        case "132":
                             imv = new ImageView(bildPunktRechtsOben);
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
                             blocks[spaltenNummer][zeilenNummer] = 145;
@@ -300,7 +300,7 @@ public class GameViewManager {
         if (blocks[row + 1][column] != 154
                 || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
             for (int i = 1; i < 9; i++) {
-                column = (int) (character.getLayoutX() / 125);
+                column = (int) ((character.getLayoutX()+Math.abs(gamePane.getLayoutX())) / 125);
                 row = (int) (character.getLayoutY() / 125);
                 if (row + i < 10 && !foundGround) {
                     if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
@@ -317,12 +317,13 @@ public class GameViewManager {
                 }
             }
             //RunFunInsert dao = new RunFunInsert();
-            //dao.insertPlayerDB(viewManager.username);
+            //dao.insertPlayerDB(getViewManager().username);
         }
         // Map bewegen
         System.out.println(character.getFitWidth()); 
-        if(character.getLayoutX() > stackPane.getWidth()/2) {
-            gamePane.setLayoutX(gamePane.getLayoutX() - 10);
+        if(character.getLayoutX() + gamePane.getLayoutX() > stackPane.getWidth()/2) {
+//            for (int i = )
+            gamePane.setLayoutX(gamePane.getLayoutX() - 9);
         }
 
         // -------------------------------------------------
@@ -467,7 +468,7 @@ public class GameViewManager {
         GameViewManager.time = time;
     }
 
-    public static int getZeit() {
+    public int getZeit() {
         return zeit;
     }
 
@@ -561,5 +562,21 @@ public class GameViewManager {
 
     public void setAnfangKarte(int anfangKarte) {
         this.anfangKarte = anfangKarte;
+    }
+
+    public Label getUsername2() {
+        return username2;
+    }
+
+    public void setUsername2(Label username2) {
+        this.username2 = username2;
+    }
+
+    public ViewManager getViewManager() {
+        return viewManager;
+    }
+
+    public void setViewManager(ViewManager viewManager) {
+        this.viewManager = viewManager;
     }
 }
