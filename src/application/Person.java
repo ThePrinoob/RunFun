@@ -1,14 +1,12 @@
 package application;
 
-import java.sql.Time;
-
 public class Person {
   //Instanzvariabeln
     private String benutzername;
-    private Time time;
+    private String time;
     
     //Konstruktor
-    public Person(String benutzername, Time zeit) {
+    public Person(String benutzername, String zeit) {
         this.setBenutzername(benutzername);
         this.setTime(zeit);
     }
@@ -23,11 +21,11 @@ public class Person {
         this.benutzername = benutzername;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time zeit) {
+    public void setTime(String zeit) {
         this.time = zeit;
     }    
 }

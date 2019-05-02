@@ -55,7 +55,7 @@ public class FunRunSelect {
             // sowie der Credit und das Gerburtsdatum
             while (rs.next()) {
                 String benutzername = rs.getString("username");
-                Time zeit = rs.getTime("time");
+                String zeit = rs.getString("time");
                 allPersonen.add(new Person(benutzername, zeit));
                 
             }

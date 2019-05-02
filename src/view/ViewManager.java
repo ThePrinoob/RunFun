@@ -190,7 +190,7 @@ public class ViewManager {
         name.setPrefSize(500, 50);
         name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        username = name.getText();
+
 
         characterChooserScene.getPane().getChildren().add(name);
 
@@ -212,7 +212,8 @@ public class ViewManager {
 //                        dao.insertPlayerDB(name.getText());
 
                         GameViewManager gameManager = new GameViewManager();
-                        gameManager.createNewGame(mainStage, choosenCharacter);
+                        username = name.getText();
+                        gameManager.createNewGame(mainStage, choosenCharacter, username);
 
                         String musicFile2 = "src/sounds/backgroundMusic.mp3"; // For example
 

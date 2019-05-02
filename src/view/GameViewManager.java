@@ -31,6 +31,7 @@ public class GameViewManager {
     private GridPane gamePane;
     private StackPane stackPane;
     private Pane nameBox;
+    private Pane timeBox;
     private Label username2;
     private int[][] blocks = new int[10][150]; // 11 Zeilen und 22 Spalten
     private Scene gameScene;
@@ -87,8 +88,9 @@ public class GameViewManager {
     private int anzahlBloecke = 50;
     private int mitschiebenKarte = 0;
     private int laengeKartenArray;
-    private int zeit = 0;
+    private static int zeit = 0;
     private boolean zeitLaeuft = false;
+    private String username;
 
     public GameViewManager() {
         setKarte(new Karte());
@@ -220,10 +222,10 @@ public class GameViewManager {
      * @param menuStage
      * @param choosenCharacter
      */
-    public void createNewGame(Stage menuStage, CHARACTER choosenCharacter) {
+    public void createNewGame(Stage menuStage, CHARACTER choosenCharacter, String username) {
         this.menuStage = menuStage;
         this.menuStage.hide();
-        createCharacter(choosenCharacter);
+        createCharacter(choosenCharacter, username);
         createScene();
         createGameLoop();
         gameStage.show();
@@ -233,6 +235,13 @@ public class GameViewManager {
         Media sound2 = new Media(new File(musicFile2).toURI().toString());
         MediaPlayer mediaPlayer2 = new MediaPlayer(sound2);
         mediaPlayer2.play();
+       
+        Label username2 = new Label();
+        username2.setLayoutX(0);
+        username2.setLayoutY(0);
+        username2.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+        username2.setText(username);
+        nameBox.getChildren().add(username2);
 
     }
 
@@ -256,10 +265,12 @@ public class GameViewManager {
      * 
      * @param choosenCharacter
      */
-    private void createCharacter(CHARACTER choosenCharacter) {
+    private void createCharacter(CHARACTER choosenCharacter, String username) {
         character = new ImageView(choosenCharacter.getUrl());
         character.prefWidth(125);
         character.prefHeight(125);
+        RunFunInsert dao = new RunFunInsert();
+        dao.insertPlayerDB(username);
     }
 
 //    private void createBotPlayers(CHARACTER choosenCharacter) {
@@ -279,15 +290,15 @@ public class GameViewManager {
         }
         zeitLaeuft = true;
         if (isZeitLaeuft()) {
-            nameBox.getChildren().clear();
+            timeBox.getChildren().clear();
             setZeit(getZeit() + 4);
-            Label username2 = new Label();
-            username2.setLayoutX(0);
-            username2.setLayoutY(0);
-            username2.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
-            username2.setText((getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
+            Label timer = new Label();
+            timer.setLayoutX(0);
+            timer.setLayoutY(50);
+            timer.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+            timer.setText((getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
                     + (getZeit() % 100) / 10);
-            nameBox.getChildren().add(username2);
+            timeBox.getChildren().add(timer);
         }
         character.setRotate(angle);
 
@@ -373,6 +384,7 @@ public class GameViewManager {
         gridPane1 = new GridPane();
         gridPane2 = new GridPane();
         nameBox = new Pane();
+        timeBox = new Pane();
 
         for (int i = 0; i < 12; i++) {
             ImageView backgroundImage1 = new ImageView(BACKGROUND_IMAGE);
@@ -390,11 +402,10 @@ public class GameViewManager {
         pane.getChildren().addAll(gridPane1, gridPane2);
         pane3.getChildren().add(gamePane);
         pane2.getChildren().add(character);
-
+        
         character.setLayoutX(125);
         character.setLayoutY(0);
-        stackPane.getChildren().addAll(pane, pane3, pane2, nameBox);
-
+        stackPane.getChildren().addAll(pane, pane3, pane2, nameBox, timeBox);
     }
 
     private void moveBackground() {
@@ -473,7 +484,7 @@ public class GameViewManager {
         GameViewManager.time = time;
     }
 
-    public int getZeit() {
+    public static int getZeit() {
         return zeit;
     }
 
@@ -583,5 +594,13 @@ public class GameViewManager {
 
     public void setViewManager(ViewManager viewManager) {
         this.viewManager = viewManager;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
