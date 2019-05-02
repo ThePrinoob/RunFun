@@ -44,7 +44,7 @@ public class GameViewManager {
     private GridPane gridPane1;
     private GridPane gridPane2;
     private Bilder bilder;
-    private static int geschwindigkeit = 1;
+    private double geschwindigkeit = 0.5;
     private static int time = 0;
     private Karte karte;
     private static GameViewManager gameViewManager = new GameViewManager();
@@ -161,12 +161,12 @@ public class GameViewManager {
                     spaltenNummer++;
                 }
                 // print Blocks
-                for (int zeile = 0; zeile < blocks.length; zeile++) {
-                    System.out.print("Zeile " + zeile + ": ");
-                    for (int spalte = 0; spalte < blocks[zeile].length; spalte++)
-                        System.out.print(blocks[zeile][spalte] + " ");
-                    System.out.println();
-                }
+//                for (int zeile = 0; zeile < blocks.length; zeile++) {
+//                    System.out.print("Zeile " + zeile + ": ");
+//                    for (int spalte = 0; spalte < blocks[zeile].length; spalte++)
+//                        System.out.print(blocks[zeile][spalte] + " ");
+//                    System.out.println();
+//                }
 
             }
 
@@ -258,6 +258,8 @@ public class GameViewManager {
      */
     private void createCharacter(CHARACTER choosenCharacter) {
         character = new ImageView(choosenCharacter.getUrl());
+        character.prefWidth(125);
+        character.prefHeight(125);
     }
 
 //    private void createBotPlayers(CHARACTER choosenCharacter) {
@@ -317,21 +319,17 @@ public class GameViewManager {
             //RunFunInsert dao = new RunFunInsert();
             //dao.insertPlayerDB(viewManager.username);
         }
+        // Map bewegen
+        System.out.println(character.getFitWidth()); 
+        if(character.getLayoutX() > stackPane.getWidth()/2) {
+            gamePane.setLayoutX(gamePane.getLayoutX() - 10);
+        }
 
         // -------------------------------------------------
-        if (getAnfangKarte() < getLaengeKartenArray() - getAnzahlBloecke()) {
-            if (getPosX() > 8 * getBreiteBlock()) {
-                setMitschiebenKarte(getMitschiebenKarte() - getGeschwindigkeit());
-                // Verhindert das permanente Mitschieben der Karte, wenn der
-                // Spieler die Mitte erreicht hat.
-                setPosX(getPosX() - getGeschwindigkeit());
-                // Wenn ein ganzer neuer Block dargestellt wurde...
-                if (getMitschiebenKarte() <= -120) {
-                    setMitschiebenKarte(getMitschiebenKarte() + 120);
-                    setAnfangKarte(getAnfangKarte() + 1);
-                }
-            }
-        }
+
+        
+        
+     
     }
 
     /**
@@ -382,18 +380,20 @@ public class GameViewManager {
         gridPane2.setLayoutX(1024);
         Pane pane = new Pane();
         Pane pane2 = new Pane();
+        Pane pane3 = new Pane();
         pane.getChildren().addAll(gridPane1, gridPane2);
-
+        pane3.getChildren().add(gamePane);
         pane2.getChildren().add(character);
+        
         character.setLayoutX(125);
         character.setLayoutY(0);
-        stackPane.getChildren().addAll(pane, gamePane, pane2, nameBox);
+        stackPane.getChildren().addAll(pane, pane3, pane2, nameBox);
 
     }
 
     private void moveBackground() {
-        gridPane1.setLayoutX(gridPane1.getLayoutX() - (getGeschwindigkeit()/2));
-        gridPane2.setLayoutX(gridPane2.getLayoutX() - (getGeschwindigkeit()/2));
+        gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit());
+        gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit());
         if (gridPane1.getLayoutX() < -1024) {
             gridPane1.setLayoutX(0);
         }
@@ -543,7 +543,7 @@ public class GameViewManager {
         return beschleunigungY;
     }
 
-    public int getGeschwindigkeit() {
+    public double getGeschwindigkeit() {
         return geschwindigkeit;
     }
 
