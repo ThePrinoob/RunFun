@@ -45,6 +45,7 @@ public class Karte {
 				zeichenArray = zeile.split(",");
 				// Array in Array Liste hinzufügen
 				karteListe.add(zeichenArray);
+				
 			}
 			if (bufRead != null) {
 				bufRead.close();

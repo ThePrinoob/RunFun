@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -109,7 +108,6 @@ public class GameViewManager {
                 for (String[] zeile : getKarte().getKarteListe()) {
                     setLaengeKartenArray(zeile.length);
                     int zeilenNummer = 0;
-
                     for (int i = getAnfangKarte(); i < getAnfangKarte() + getAnzahlBloecke(); i++) {
                         String block = zeile[i];
                         switch (block) {
@@ -367,6 +365,7 @@ public class GameViewManager {
     private void createScene() {
         gridPane1 = new GridPane();
         gridPane2 = new GridPane();
+        nameBox = new Pane();
 
         for (int i = 0; i < 12; i++) {
             ImageView backgroundImage1 = new ImageView(BACKGROUND_IMAGE);
@@ -390,8 +389,8 @@ public class GameViewManager {
     }
 
     private void moveBackground() {
-        gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit());
-        gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit());
+        gridPane1.setLayoutX(gridPane1.getLayoutX() - (getGeschwindigkeit()/2));
+        gridPane2.setLayoutX(gridPane2.getLayoutX() - (getGeschwindigkeit()/2));
         if (gridPane1.getLayoutX() < -1024) {
             gridPane1.setLayoutX(0);
         }
