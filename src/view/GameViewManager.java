@@ -293,14 +293,14 @@ public class GameViewManager {
 
         // Boden und wand erkennen
 
-        int column = (int) (character.getLayoutX() / 125);
+        int column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())) / 125);
         int row = (int) (character.getLayoutY() / 125);
         boolean foundGround = false;
 
         if (blocks[row + 1][column] != 154
                 || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
             for (int i = 1; i < 9; i++) {
-                column = (int) ((character.getLayoutX()+Math.abs(gamePane.getLayoutX())) / 125);
+                column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())) / 125);
                 row = (int) (character.getLayoutY() / 125);
                 if (row + i < 10 && !foundGround) {
                     if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
@@ -313,11 +313,16 @@ public class GameViewManager {
 
                 } else {
                     character.setLayoutX(character.getLayoutX() + getGeschwindigkeit());
+                    if (character.getLayoutX() + gamePane.getLayoutX() +2 >= stackPane.getWidth()
+                            / 2) {
+                        character.setLayoutX(character.getLayoutX() - 1);
+                        gamePane.setLayoutX(gamePane.getLayoutX() - 1);
+                    }
                     moveBackground();
                 }
             }
-            //RunFunInsert dao = new RunFunInsert();
-            //dao.insertPlayerDB(getViewManager().username);
+            // RunFunInsert dao = new RunFunInsert();
+            // dao.insertPlayerDB(getViewManager().username);
         }
         // Map bewegen
         System.out.println(character.getFitWidth()); 
@@ -385,7 +390,7 @@ public class GameViewManager {
         pane.getChildren().addAll(gridPane1, gridPane2);
         pane3.getChildren().add(gamePane);
         pane2.getChildren().add(character);
-        
+
         character.setLayoutX(125);
         character.setLayoutY(0);
         stackPane.getChildren().addAll(pane, pane3, pane2, nameBox);
