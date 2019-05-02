@@ -1,10 +1,14 @@
 package view;
 
+// ~~~ Imports ~~~
 import java.io.File;
 import java.util.Random;
 
 import javaDB.RunFunInsert;
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -20,11 +24,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.CHARACTER;
 import model.Karte;
 
 public class GameViewManager {
-
+    // ~~~ Instanzvariabeln ~~~
     private static final int GAME_WIDTH = 1080;
     private static final int GAME_HEIGHT = 720;
     private final String BACKGROUND_IMAGE = "view/resources/background/backgroundColorGrass.png";
@@ -45,7 +50,6 @@ public class GameViewManager {
     private AnimationTimer gameTimer;
     private GridPane gridPane1;
     private GridPane gridPane2;
-    private Bilder bilder;
     private double geschwindigkeit = 5;
     private static int time = 0;
     private Karte karte;
@@ -77,6 +81,9 @@ public class GameViewManager {
     private Image bildErdeLinks = new Image(
             getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"), 125, 125,
             false, false);
+    private Image bildZiel = new Image(
+            getClass().getResourceAsStream("resources/tiles/runfun_ziel.png"), 125, 125, false,
+            false);
 
     private ImageView imv;
 
@@ -91,8 +98,11 @@ public class GameViewManager {
     private int laengeKartenArray;
     private static int zeit = 0;
     private boolean zeitLaeuft = false;
+    private boolean isWaiting;
+    private boolean zielErreicht;
     private String username;
 
+    // ~~~ Methoden ~~~
     public GameViewManager() {
         setKarte(new Karte());
         initializeStage();
@@ -152,9 +162,9 @@ public class GameViewManager {
                             blocks[spaltenNummer][zeilenNummer] = 138;
                             break;
                         case "150":
-                            imv = new ImageView(bildErdeLinks);
+                            imv = new ImageView(bildZiel);
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
-                            blocks[spaltenNummer][zeilenNummer] = 138;
+                            blocks[spaltenNummer][zeilenNummer] = 150;
                             break;
 
                         // Blöcke Decko
@@ -231,10 +241,10 @@ public class GameViewManager {
      */
     public void createNewGame(Stage menuStage, CHARACTER choosenCharacter, String username) {
         this.menuStage = menuStage;
-        this.menuStage.hide();
-        createCharacter(choosenCharacter, username);
+        this.menuStage.close();
+        createCharacter(choosenCharacter);
         createScene();
-        createGameLoop();
+        createGameLoop(username);
         gameStage.show();
         // Musik
         // Background
@@ -255,11 +265,11 @@ public class GameViewManager {
     /**
      * Character steuern
      */
-    private void createGameLoop() {
+    private void createGameLoop(String username) {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long arg0) {
-                characterRun();
+                characterRun(username);
                 jumpCharacter();
 //              sneakCharacter();
             }
@@ -272,12 +282,11 @@ public class GameViewManager {
      * 
      * @param choosenCharacter
      */
-    private void createCharacter(CHARACTER choosenCharacter, String username) {
+    private void createCharacter(CHARACTER choosenCharacter) {
         character = new ImageView(choosenCharacter.getUrl());
         character.prefWidth(125);
         character.prefHeight(125);
-        RunFunInsert dao = new RunFunInsert();
-        dao.insertPlayerDB(username);
+
     }
 
 //    private void createBotPlayers(CHARACTER choosenCharacter) {
@@ -291,82 +300,97 @@ public class GameViewManager {
     /**
      * Character rennen lassen
      */
-    private void characterRun() {
-        if (angle < 30) {
-            angle += 5;
-        }
-        zeitLaeuft = true;
-        if (isZeitLaeuft()) {
-            timeBox.getChildren().clear();
-            setZeit(getZeit() + 4);
-            Label timer = new Label();
-            timer.setLayoutX(0);
-            timer.setLayoutY(50);
-            timer.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
-            timer.setText((getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
-                    + (getZeit() % 100) / 10);
-            timeBox.getChildren().add(timer);
-        }
-        character.setRotate(angle);
+    private void characterRun(String username) {
+        if (!zielErreicht) {
+            if (angle < 30) {
+                angle += 5;
+            }
+            zeitLaeuft = true;
+            if (isZeitLaeuft()) {
+                timeBox.getChildren().clear();
+                setZeit(getZeit() + 4);
+                Label timer = new Label();
+                timer.setLayoutX(0);
+                timer.setLayoutY(50);
+                timer.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+                timer.setText((getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
+                        + (getZeit() % 100) / 10);
+                timeBox.getChildren().add(timer);
+            }
+            character.setRotate(angle);
 
-        // Boden und wand erkennen
+            // Boden und wand erkennen
 
-        int column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
-                + (character.getBoundsInLocal().getWidth()) / 4) / 125);
-        int row = (int) (character.getLayoutY() / 125);
-        boolean foundGround = false;
-
-        if (blocks[row + 1][column] != 154
-                || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
-            for (int i = 1; i < 9; i++) {
-                column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
-                        + (character.getBoundsInLocal().getWidth()) / 4) / 125);
-                row = (int) (character.getLayoutY() / 125);
-                if (row + i < 10 && !foundGround) {
-                    if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
-                        if (blocks[row + 1][column] == 154 || blocks[row + 1][column] == 133) {
-                            foundGround = true;
-                        } else {
-                            character.setLayoutY(character.getLayoutY() + 125);
+            int column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
+                    + (character.getBoundsInLocal().getWidth()) / 4) / 125);
+            int row = (int) (character.getLayoutY() / 125);
+            boolean foundGround = false;
+            if (blocks[row][column + 1] == 150) {
+                zielErreicht = true;
+                RunFunInsert dao = new RunFunInsert();
+                String finishTime = (getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
+                        + (getZeit() % 100) / 10;
+                dao.insertPlayerDB(username, finishTime);
+            } else if (blocks[row + 1][column] != 154
+                    || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
+                for (int i = 1; i < 9; i++) {
+                    column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
+                            + (character.getBoundsInLocal().getWidth()) / 4) / 125);
+                    row = (int) (character.getLayoutY() / 125);
+                    if (row + i < 10 && !foundGround) {
+                        if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
+                            if (blocks[row + 1][column] == 154 || blocks[row + 1][column] == 133) {
+                                foundGround = true;
+                            } else {
+                                if (!isWaiting) {
+                                    character.setLayoutY(character.getLayoutY() + 125);
+                                }
+                            }
                         }
                     }
-
-                } else {
                 }
-            }
-            if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
-                gamePane.setLayoutX(gamePane.getLayoutX() - getGeschwindigkeit());
-            } else {
-                character.setLayoutX(character.getLayoutX() + getGeschwindigkeit());
 
+                // Map bewegen
+                if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
+                    gamePane.setLayoutX(gamePane.getLayoutX() - getGeschwindigkeit());
+                } else {
+                    character.setLayoutX(character.getLayoutX() + getGeschwindigkeit());
+
+                }
+                moveBackground();
+                // RunFunInsert dao = new RunFunInsert();
+                // dao.insertPlayerDB(getViewManager().username);
             }
-            moveBackground();
-            // RunFunInsert dao = new RunFunInsert();
-            // dao.insertPlayerDB(getViewManager().username);
+
+            // -------------------------------------------------
+
+        } else {
+            gameStage.close();
         }
-        // Map bewegen
-//        if(character.getLayoutX() + gamePane.getLayoutX() > stackPane.getWidth()/2) {
-////            for (int i = )
-//            gamePane.setLayoutX(gamePane.getLayoutX() - 9);
-//        }
-
-        // -------------------------------------------------
-
     }
 
     /**
      * Character springen lassen
      */
     private void jumpCharacter() {
+        if (!isWaiting) {
+            if (isUpKeyPressed && !isDownKeyPressed) {
+                this.setIsWaiting(true);
+                character.setLayoutY(character.getLayoutY() - 125);
+                // macht einen Delay, dass er nicht ganz schnell nachinander springen kann.
+                PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
 
-        if (isUpKeyPressed && !isDownKeyPressed) {
-            if (angle > -30) {
-                angle -= 5;
+                delay.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        setIsWaiting(false);
+                    }
+                });
+                delay.play();
             }
-            character.setRotate(angle);
-            character.setLayoutY(character.getLayoutY() - 125);
         }
     }
+
     /**
      * Character sneaken lassen (nicht vollendet)
      */
@@ -413,14 +437,19 @@ public class GameViewManager {
         stackPane.getChildren().addAll(pane, pane3, pane2, nameBox, timeBox);
     }
 
+    /**
+     * Hintergrund bewegen und Hintergrund zurücksetzen
+     */
     private void moveBackground() {
+        // Hintergrund bewegen
         if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
-            gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit()*2);
-            gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit()*2);
+            gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit() * 2);
+            gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit() * 2);
         } else {
             gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit());
             gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit());
         }
+        // Hintegrundzurücksetzen
         if (gridPane1.getLayoutX() < -1024) {
             gridPane1.setLayoutX(0);
         }
@@ -430,6 +459,7 @@ public class GameViewManager {
         }
     }
 
+    // ~~~ Getter && Setter ~~~
     public GridPane getGamePane() {
         return gamePane;
     }
@@ -454,14 +484,6 @@ public class GameViewManager {
         this.menuStage = menuStage;
     }
 
-    public Bilder getBilder() {
-        return bilder;
-    }
-
-    public void setBilder(Bilder bilder) {
-        this.bilder = bilder;
-    }
-
     public static GameViewManager getInstance() {
         return gameViewManager;
     }
@@ -479,7 +501,7 @@ public class GameViewManager {
     }
 
     public void setZeit(int zeit) {
-        this.zeit = zeit;
+        GameViewManager.zeit = zeit;
     }
 
     public void setKarte(Karte karte) {
@@ -612,5 +634,21 @@ public class GameViewManager {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isWaiting() {
+        return isWaiting;
+    }
+
+    public void setIsWaiting(boolean isWaiting) {
+        this.isWaiting = isWaiting;
+    }
+
+    public boolean isZielErreicht() {
+        return zielErreicht;
+    }
+
+    public void setZielErreicht(boolean zielErreicht) {
+        this.zielErreicht = zielErreicht;
     }
 }

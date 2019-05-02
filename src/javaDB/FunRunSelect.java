@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class FunRunSelect {
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Person all;
 
     public boolean insertPlayerDB(String name) {
         // TODO Auto-generated method stub

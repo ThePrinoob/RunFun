@@ -13,7 +13,7 @@ package javaDB;
             
             public List<Person> selectPlayerDB();
 
-            public boolean insertPlayerDB(String name);
+            public boolean insertPlayerDB(String name, String zeit);
 
             boolean updatePlayerDB(String name, int maxPunkte);
             

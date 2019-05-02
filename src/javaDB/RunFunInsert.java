@@ -8,8 +8,6 @@ import java.util.List;
 
 //import application.Main;
 import application.Person;
-import javaDB.ConnectionFactory;
-import view.GameViewManager;
 
 
 public class RunFunInsert implements insertPlayer {
@@ -21,7 +19,7 @@ public class RunFunInsert implements insertPlayer {
    
     
     @Override
-    public boolean insertPlayerDB(String name) {
+    public boolean insertPlayerDB(String name, String zeit) {
         // SQL Querie
         String insert = "Insert into highscore (username, time, map_id) values (?,?,?);";
         
@@ -34,8 +32,7 @@ public class RunFunInsert implements insertPlayer {
 
             // Werte anbinden
             ps.setString(1, name);
-            ps.setString(2, (GameViewManager.getZeit() / 100 / 60) + ":" + ((GameViewManager.getZeit() / 100) % 60) + "."
-                    + (GameViewManager.getZeit() % 100) / 10);
+            ps.setString(2, zeit);
             ps.setInt(3, 1);
 
             // Ausführen des Queries

@@ -6,7 +6,6 @@ import java.util.List;
 
 import application.Person;
 import javaDB.FunRunSelect;
-import javaDB.RunFunInsert;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -76,39 +75,8 @@ public class ViewManager {
         createButtons();
         createSubScenes();
         createBackground();
-
-//        mainPane.setOnKeyPressed(e -> {
-//            if (e.getCode() == KeyCode.K) {
-//                ViewManager manager = new ViewManager();
-//                primaryStage = manager.getMainStage();
-//                primaryStage.show();
-//             //mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-//             @Override
-//             public void handle (KeyEvent event) {
-////                 ViewManager manager = new ViewManager();
-////                 
-//                
-//             }
-
-        // });
     }
-//public void start(Stage primaryStage) {
-//    
-//    mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//        
-//     @Override
-//     public void handle (KeyEvent event) {
-//         try {
-//             ViewManager manager = new ViewManager();
-//             primaryStage = manager.getMainStage();
-//             primaryStage.show();
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-//      
-//     }}); 
-
+    
     private void showSubScene(RunFunSubScene subScene) {
         if (sceneToHide != null) {
             sceneToHide.moveSubScene();
@@ -118,15 +86,11 @@ public class ViewManager {
     }
 
     private void createSubScenes() {
-
         highscoreSubScene = new RunFunSubScene();
         mainPane.getChildren().add(highscoreSubScene);
-
         createCharacterChooserSubScene();
-
         creditsSubScene = new RunFunSubScene();
         mainPane.getChildren().add(creditsSubScene);
-
     }
 
     public void createCharacterChooserSubScene() {
@@ -135,16 +99,7 @@ public class ViewManager {
         InfoLabel chooseCharacterLabel = new InfoLabel("Wähle deinen Charakter");
         chooseCharacterLabel.setLayoutX(260);
         chooseCharacterLabel.setLayoutY(25);
-//        TextField name = new TextField("");
-//        name.setPromptText("Gebe deinen Namen ein");
-//        name.setLayoutX(260);
-//        name.setLayoutY(100);
-//        name.setPrefSize(500, 50);
-//        name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-//        myText = name.getText();
-
         characterChooserScene.getPane().getChildren().add(chooseCharacterLabel);
-        // characterChooserScene.getPane().getChildren().add(name);
         characterChooserScene.getPane().getChildren().add(createCharacterToChoose());
         characterChooserScene.getPane().getChildren().add(createButtonToStart());
 
@@ -220,6 +175,7 @@ public class ViewManager {
                         Media sound2 = new Media(new File(musicFile2).toURI().toString());
                         MediaPlayer mediaPlayer2 = new MediaPlayer(sound2);
                         mediaPlayer2.play();
+                        mainPane.getChildren().clear();
                     } else {
                         Label labelresponse2 = new Label();
                         labelresponse2.setLayoutX(180);
@@ -243,7 +199,6 @@ public class ViewManager {
 //    }
 
     public Stage getMainStage() {
-
         return mainStage;
     }
 
