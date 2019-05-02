@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.util.Random;
 
+import javaDB.RunFunInsert;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -86,7 +87,7 @@ public class GameViewManager {
     private int anzahlBloecke = 21;
     private int mitschiebenKarte = 0;
     private int laengeKartenArray;
-    private int zeit = 0;
+    private static int zeit = 0;
     private boolean zeitLaeuft = false;
 
     public GameViewManager() {
@@ -313,6 +314,8 @@ public class GameViewManager {
                     moveBackground();
                 }
             }
+            //RunFunInsert dao = new RunFunInsert();
+            //dao.insertPlayerDB(viewManager.username);
         }
 
         // -------------------------------------------------
@@ -464,7 +467,7 @@ public class GameViewManager {
         GameViewManager.time = time;
     }
 
-    public int getZeit() {
+    public static int getZeit() {
         return zeit;
     }
 

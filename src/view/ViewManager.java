@@ -175,12 +175,15 @@ public class ViewManager {
         box.setLayoutY(250);
         return box;
     }
+    
+    TextField name = new TextField("");
+
 
     public RunFunButton createButtonToStart() {
         RunFunButton startButton = new RunFunButton("Start");
         startButton.setLayoutX(400);
         startButton.setLayoutY(500);
-        TextField name = new TextField("");
+        
         name.setPromptText("Gebe deinen Namen ein");
         name.setLayoutX(260);
         name.setLayoutY(100);
@@ -205,8 +208,8 @@ public class ViewManager {
                 } else {
                     if (choosenCharacter != null) {
 
-                        RunFunInsert dao = new RunFunInsert();
-                        dao.insertPlayerDB(name.getText());
+//                        RunFunInsert dao = new RunFunInsert();
+//                        dao.insertPlayerDB(name.getText());
 
                         GameViewManager gameManager = new GameViewManager();
                         gameManager.createNewGame(mainStage, choosenCharacter);
@@ -415,4 +418,13 @@ public class ViewManager {
         this.bangClip = bangClip;
     }
 
+    
+    public TextField getName() {
+        return name;
+    }
+
+    public void setName(TextField name) {
+        this.name = name;
+    }
+    
 }

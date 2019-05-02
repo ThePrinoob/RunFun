@@ -9,6 +9,7 @@ import java.util.List;
 //import application.Main;
 import application.Person;
 import javaDB.ConnectionFactory;
+import view.GameViewManager;
 
 
 public class RunFunInsert implements insertPlayer {
@@ -17,11 +18,13 @@ public class RunFunInsert implements insertPlayer {
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
+   
     
     @Override
     public boolean insertPlayerDB(String name) {
         // SQL Querie
         String insert = "Insert into highscore (username, time, map_id) values (?,?,?);";
+        
         try {
             // Verbindung aufbauen
             con = openConnection();
@@ -31,7 +34,8 @@ public class RunFunInsert implements insertPlayer {
 
             // Werte anbinden
             ps.setString(1, name);
-            ps.setInt(2, 00);
+            ps.setString(2, (GameViewManager.getZeit() / 100 / 60) + ":" + ((GameViewManager.getZeit() / 100) % 60) + "."
+                    + (GameViewManager.getZeit() % 100) / 10);
             ps.setInt(3, 1);
 
             // Ausführen des Queries
