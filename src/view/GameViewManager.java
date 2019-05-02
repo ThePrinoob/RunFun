@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javaDB.RunFunInsert;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -45,7 +46,7 @@ public class GameViewManager {
     private GridPane gridPane1;
     private GridPane gridPane2;
     private Bilder bilder;
-    private double geschwindigkeit = 0.5;
+    private double geschwindigkeit = 5;
     private static int time = 0;
     private Karte karte;
     private static GameViewManager gameViewManager = new GameViewManager();
@@ -85,7 +86,7 @@ public class GameViewManager {
     private double beschleunigungY = 2;
 
     private int anfangKarte = 0;
-    private int anzahlBloecke = 50;
+    private int anzahlBloecke = 100;
     private int mitschiebenKarte = 0;
     private int laengeKartenArray;
     private static int zeit = 0;
@@ -150,6 +151,11 @@ public class GameViewManager {
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
                             blocks[spaltenNummer][zeilenNummer] = 138;
                             break;
+                        case "150":
+                            imv = new ImageView(bildErdeLinks);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 138;
+                            break;
 
                         // Blöcke Decko
                         case "000":
@@ -208,6 +214,7 @@ public class GameViewManager {
         gamePane.setMinSize(1920, 1080);
         stackPane = new StackPane();
         gameScene = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
+        gameScene.setCursor(Cursor.NONE);
         gameStage = new Stage();
         gameStage.setFullScreen(true);
         gameStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -235,7 +242,7 @@ public class GameViewManager {
         Media sound2 = new Media(new File(musicFile2).toURI().toString());
         MediaPlayer mediaPlayer2 = new MediaPlayer(sound2);
         mediaPlayer2.play();
-       
+
         Label username2 = new Label();
         username2.setLayoutX(0);
         username2.setLayoutY(0);
@@ -304,14 +311,16 @@ public class GameViewManager {
 
         // Boden und wand erkennen
 
-        int column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())) / 125);
+        int column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
+                + (character.getBoundsInLocal().getWidth()) / 4) / 125);
         int row = (int) (character.getLayoutY() / 125);
         boolean foundGround = false;
 
         if (blocks[row + 1][column] != 154
                 || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
             for (int i = 1; i < 9; i++) {
-                column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())) / 125);
+                column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
+                        + (character.getBoundsInLocal().getWidth()) / 4) / 125);
                 row = (int) (character.getLayoutY() / 125);
                 if (row + i < 10 && !foundGround) {
                     if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
@@ -323,30 +332,26 @@ public class GameViewManager {
                     }
 
                 } else {
-                    character.setLayoutX(character.getLayoutX() + getGeschwindigkeit());
-                    if (character.getLayoutX() + gamePane.getLayoutX() +2 >= stackPane.getWidth()
-                            / 2) {
-                        character.setLayoutX(character.getLayoutX() - 1);
-                        gamePane.setLayoutX(gamePane.getLayoutX() - 1);
-                    }
-                    moveBackground();
                 }
             }
+            if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
+                gamePane.setLayoutX(gamePane.getLayoutX() - getGeschwindigkeit());
+            } else {
+                character.setLayoutX(character.getLayoutX() + getGeschwindigkeit());
+
+            }
+            moveBackground();
             // RunFunInsert dao = new RunFunInsert();
             // dao.insertPlayerDB(getViewManager().username);
         }
         // Map bewegen
-        System.out.println(character.getFitWidth()); 
-        if(character.getLayoutX() + gamePane.getLayoutX() > stackPane.getWidth()/2) {
-//            for (int i = )
-            gamePane.setLayoutX(gamePane.getLayoutX() - 9);
-        }
+//        if(character.getLayoutX() + gamePane.getLayoutX() > stackPane.getWidth()/2) {
+////            for (int i = )
+//            gamePane.setLayoutX(gamePane.getLayoutX() - 9);
+//        }
 
         // -------------------------------------------------
 
-        
-        
-     
     }
 
     /**
@@ -402,15 +407,20 @@ public class GameViewManager {
         pane.getChildren().addAll(gridPane1, gridPane2);
         pane3.getChildren().add(gamePane);
         pane2.getChildren().add(character);
-        
+
         character.setLayoutX(125);
         character.setLayoutY(0);
         stackPane.getChildren().addAll(pane, pane3, pane2, nameBox, timeBox);
     }
 
     private void moveBackground() {
-        gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit());
-        gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit());
+        if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
+            gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit()*2);
+            gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit()*2);
+        } else {
+            gridPane1.setLayoutX(gridPane1.getLayoutX() - getGeschwindigkeit());
+            gridPane2.setLayoutX(gridPane2.getLayoutX() - getGeschwindigkeit());
+        }
         if (gridPane1.getLayoutX() < -1024) {
             gridPane1.setLayoutX(0);
         }
