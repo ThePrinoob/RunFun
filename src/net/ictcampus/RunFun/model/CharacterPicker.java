@@ -1,6 +1,6 @@
 package net.ictcampus.RunFun.model;
 
-//imports
+//~~~ Imports ~~~
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

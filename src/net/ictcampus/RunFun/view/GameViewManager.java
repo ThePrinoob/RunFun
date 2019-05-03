@@ -76,7 +76,6 @@ public class GameViewManager {
     private Image bildPunktLinksOben = new Image(
             getClass().getResourceAsStream("resources/tiles/runfun_ecke_linksoben.png"), hoeheBlock,
             breiteBlock, false, false);
-
     private Image bildRutscheUnten = new Image(
             getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"), hoeheBlock,
             breiteBlock, false, false);
@@ -336,26 +335,37 @@ public class GameViewManager {
                     + (character.getBoundsInLocal().getWidth()) / 4) / 125);
             int row = (int) (character.getLayoutY() / 125);
             boolean foundGround = false;
-            if (blocks[row][column + 1] == 150) {
+            // Ist Ziel erreicht?
+            if (blocks[row][column + 1] == 150 || blocks[row + 1][column] == 150) {
                 zielErreicht = true;
-                RunFunInsert dao = new RunFunInsert();
-                //Funktioniert nicht richtig
+                // Zeit anzeigen aktualisieren
                 String finishTime = (getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
                         + (getZeit() % 100) / 10;
-                
+                // Werte in Datenbank schreiben
+                RunFunInsert dao = new RunFunInsert();
                 dao.insertPlayerDB(username, finishTime);
+                // Ist unter dir Grass oder eine Schgräge und vor dir Luft
             } else if (blocks[row + 1][column] != 154
                     || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
+                // Wie viele male unter dir kein Grass Blöck ist
                 for (int i = 1; i < 9; i++) {
                     column = (int) ((character.getLayoutX() + Math.abs(gamePane.getLayoutX())
                             + (character.getBoundsInLocal().getWidth()) / 4) / 125);
                     row = (int) (character.getLayoutY() / 125);
+                    // hat er schon Boden gefunden
                     if (row + i < 10 && !foundGround) {
-                        if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133 || blocks[row + 1][column] == 174) {
-                            if (blocks[row + 1][column] == 154 || blocks[row + 1][column] == 133 || blocks[row + 1][column] == 174) {
+                        // Ist weiter unter dir Grass oder Schräge runter (oder Schräge hoch)
+                        if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133
+                                || blocks[row + 1][column] == 174) {
+                            // Ist unter dir Grass oder Schräge runter (oder Schräge hoch)
+                            if (blocks[row + 1][column] == 154 || blocks[row + 1][column] == 133
+                                    || blocks[row + 1][column] == 174) {
+                                // Charakter hat Boden gefunden
                                 foundGround = true;
                             } else {
+                                // solange Cooldown kann er nicht erneut springen
                                 if (!isWaiting) {
+                                    // runterfliegen
                                     character.setLayoutY(character.getLayoutY() + 125);
                                 }
                             }
@@ -364,9 +374,9 @@ public class GameViewManager {
                 }
                 // Garage
                 // || blocks[row + 1][column] != 174
-                //|| blocks[row + 1][column] == 174
-                //  || blocks[row + 1][column] == 174
-                
+                // || blocks[row + 1][column] == 174
+                // || blocks[row + 1][column] == 174
+
                 // Map bewegen
                 if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
                     gamePane.setLayoutX(gamePane.getLayoutX() - getGeschwindigkeit());
@@ -374,14 +384,11 @@ public class GameViewManager {
                     character.setLayoutX(character.getLayoutX() + getGeschwindigkeit());
 
                 }
+                // Hintergrund bewegen
                 moveBackground();
-                // RunFunInsert dao = new RunFunInsert();
-                // dao.insertPlayerDB(getViewManager().username);
             }
-
-            // -------------------------------------------------
-
         } else {
+            // Sobald Ziel erreicht ist, Spiel beenden
             gameStage.close();
         }
     }
@@ -391,6 +398,7 @@ public class GameViewManager {
      */
     private void jumpCharacter() {
         if (!isWaiting) {
+            //ist up Key gedrückt
             if (isUpKeyPressed && !isDownKeyPressed) {
                 this.setIsWaiting(true);
                 character.setLayoutY(character.getLayoutY() - 125);
@@ -418,8 +426,6 @@ public class GameViewManager {
                 // Character halb so gross
                 character.setFitHeight(62.5);
                 character.setLayoutY(character.getLayoutY() + 62.5);
-                angle = -30;
-                character.setRotate(angle);
                 // macht einen Delay, dass er nicht ganz schnell nachinander springen kann.
                 PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
                 delay.setOnFinished(new EventHandler<ActionEvent>() {
@@ -439,11 +445,13 @@ public class GameViewManager {
      * Hintergrund erstellen
      */
     private void createScene() {
+        // initalisieren
         gridPane1 = new GridPane();
         gridPane2 = new GridPane();
         nameBox = new Pane();
         timeBox = new Pane();
 
+        // Hintergrund schön erstellen
         for (int i = 0; i < 12; i++) {
             ImageView backgroundImage1 = new ImageView(
                     new Image(getClass().getResourceAsStream(BACKGROUND_IMAGE)));
@@ -455,6 +463,7 @@ public class GameViewManager {
             gridPane2.getChildren().add(backgroundImage2);
         }
 
+        // alles hinzufügen
         gridPane2.setLayoutX(1024);
         Pane pane = new Pane();
         Pane pane2 = new Pane();

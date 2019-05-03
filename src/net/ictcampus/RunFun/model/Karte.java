@@ -1,5 +1,6 @@
 package net.ictcampus.RunFun.model;
 
+//~~~ Imports ~~~
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

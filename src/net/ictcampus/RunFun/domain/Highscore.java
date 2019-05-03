@@ -1,5 +1,6 @@
 package net.ictcampus.RunFun.domain;
 
+//~~~ Imports ~~~
 import java.util.ArrayList;
 import java.util.List;
 

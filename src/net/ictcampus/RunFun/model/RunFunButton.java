@@ -1,5 +1,6 @@
 package net.ictcampus.RunFun.model;
 
+//~~~ Imports ~~~
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 

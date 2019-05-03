@@ -1,6 +1,6 @@
 package net.ictcampus.RunFun.application;
 
-//imports
+//~~~ Imports ~~~
 import javafx.application.Application;
 import javafx.stage.Stage;
 import net.ictcampus.RunFun.view.ViewManager;

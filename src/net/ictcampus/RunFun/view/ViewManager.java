@@ -1,5 +1,6 @@
 package net.ictcampus.RunFun.view;
 
+//~~~ Imports ~~~
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -48,6 +48,7 @@ public class ViewManager {
     private CHARACTER choosenCharacter;
     private String username;
 
+    // ~~~ Konstruktor ~~~
     public ViewManager() {
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
@@ -61,6 +62,7 @@ public class ViewManager {
         createBackground();
     }
 
+    // ~~~ Methoden ~~~
     private void showSubScene(RunFunSubScene subScene) {
         if (sceneToHide != null) {
             sceneToHide.moveSubScene();
@@ -197,7 +199,6 @@ public class ViewManager {
 
                 // Play Sound
                 String musicFile = "src/net/ictcampus/RunFun/sounds/loose.mp3"; // For example
-
                 Media sound = new Media(new File(musicFile).toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.play();
@@ -311,6 +312,8 @@ public class ViewManager {
                 null);
         mainPane.setBackground(new Background(background));
     }
+
+    // ~~~ Getter && Setter ~~~
 
     public TextField getName() {
         return name;

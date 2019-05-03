@@ -1,6 +1,6 @@
 package net.ictcampus.RunFun.model;
 
-//imports
+//~~~ Imports ~~~
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +13,12 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.util.Duration;
 
+/**
+ * Hauptmenu SubScene, welche nach Buttonclick angezeigt werden
+ * 
+ * @author ingoldd, leuenbergermik
+ *
+ */
 public class RunFunSubScene extends SubScene {
 
     private String BACKGROUND_IMAGE = "resources/orange_panel.png";

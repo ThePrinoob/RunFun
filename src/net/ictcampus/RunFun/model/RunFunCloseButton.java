@@ -1,6 +1,6 @@
 package net.ictcampus.RunFun.model;
 
-//imports
+//~~~ Imports ~~~
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;

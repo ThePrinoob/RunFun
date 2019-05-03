@@ -1,13 +1,11 @@
 package net.ictcampus.RunFun.jUnit;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import net.ictcampus.RunFun.javaDB.FunRunSelect;
-import net.ictcampus.RunFun.javaDB.Player;
+import net.ictcampus.RunFun.javaDB.RunFunInsert;
 
 /**
  * GameViewManager Test (Like the Name already told you)
@@ -16,31 +14,12 @@ import net.ictcampus.RunFun.javaDB.Player;
  * 
  */
 public class GameViewManagerTest {
-//    private static ViewManager viewManager;
-//    private static GameViewManager gameViewManager;
-//    private static CHARACTER character;
-    private static FunRunSelect runfunselect;
-    private static List<Player> player = new ArrayList<>();
+    
+    private static RunFunInsert runfuninsert = new RunFunInsert();
 
     @BeforeClass
     public static void setUpBeforeClass() {
-//        gameViewManager = new GameViewManager();
-//        viewManager = new ViewManager();
-        runfunselect = new FunRunSelect();
-        player = runfunselect.selectPlayerDB();
-
-        // Ausgeben der ausgelesenen Spieler
-        int podest = 1;
-
-        // Liste mit den Playern
-        // Ausgeben der ausgelesenen Spieler
-        for (Player p : player) {
-            score.setText(score.getText() + "\n" + podest + ". " + p.getBenutzername());
-            time.setText(time.getText() + "\n" + p.getTime());
-            podest++;
-        }
         
-
     }
 
 //    @Test
@@ -54,7 +33,10 @@ public class GameViewManagerTest {
 //    }
     @Test
     public void testSelectDB() {
-        runfunselect.selectPlayerDB();
+        System.out.println("Start testSelectDB...");
+        runfuninsert.insertPlayerDB("hund", "1:05:03");
+        
+        assertEquals("1:05:03", null);
     }
 
 }
