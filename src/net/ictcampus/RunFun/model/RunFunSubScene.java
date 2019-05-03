@@ -16,16 +16,12 @@ import javafx.util.Duration;
 public class RunFunSubScene extends SubScene {
 
     private String BACKGROUND_IMAGE = "resources/orange_panel.png";
-
-//    private boolean isHidden;
-
     private boolean isHidden;
 
     public RunFunSubScene() {
         super(new AnchorPane(), 1000, 600);
         prefWidth(1000);
         prefHeight(600);
-
         BackgroundImage image = new BackgroundImage(
                 new Image(getClass().getResourceAsStream(BACKGROUND_IMAGE), 1000, 600, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,

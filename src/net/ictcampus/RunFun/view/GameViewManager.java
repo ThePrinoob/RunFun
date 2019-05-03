@@ -2,7 +2,6 @@ package net.ictcampus.RunFun.view;
 
 // ~~~ Imports ~~~
 import java.io.File;
-import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
@@ -30,12 +29,11 @@ import net.ictcampus.RunFun.model.Karte;
 
 public class GameViewManager {
     // ~~~ Instanzvariabeln ~~~
-    private static final int GAME_WIDTH = 1080;
-    private static final int GAME_HEIGHT = 720;
-    private final String BACKGROUND_IMAGE = "resources/background/backgroundColorGrass.png";
-    Random randomPositionGenerator;
-    private GridPane gamePane;
+    private int GAME_WIDTH = 1920;
+    private int GAME_HEIGHT = 1080;
+    private String BACKGROUND_IMAGE = "resources/background/backgroundColorGrass.png";
     private StackPane stackPane;
+    private GridPane gamePane;
     private Pane nameBox;
     private Pane timeBox;
     private Label username2;
@@ -56,45 +54,39 @@ public class GameViewManager {
     private static GameViewManager gameViewManager = new GameViewManager();
     private ViewManager viewManager;
 
-    private int hoeheBlock = 20;
-    private int breiteBlock = 20;
+    private int hoeheBlock = 125;
+    private int breiteBlock = 125;
 
     // Map images
     private Image bildAbschraegungLinks = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"), 125,
-            125, false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"), hoeheBlock,
+            breiteBlock, false, false);
     private Image bildErdeOben = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"), 125, 125,
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"), hoeheBlock, breiteBlock,
             false, false);
     private Image bildErdeRechts = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"), 125, 125,
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"), hoeheBlock, breiteBlock,
             false, false);
     private Image bildErde = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_erde.png"), 125, 125, false,
+            getClass().getResourceAsStream("resources/tiles/runfun_erde.png"), hoeheBlock, breiteBlock, false,
             false);
     private Image bildPunktRechtsOben = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"), 125, 125,
+            getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"), hoeheBlock, breiteBlock,
             false, false);
     private Image bildRutscheUnten = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"), 125, 125,
+            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"), hoeheBlock, breiteBlock,
             false, false);
     private Image bildErdeLinks = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"), 125, 125,
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"), hoeheBlock, breiteBlock,
             false, false);
     private Image bildZiel = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_ziel.png"), 125, 125, false,
+            getClass().getResourceAsStream("resources/tiles/runfun_ziel.png"), hoeheBlock, breiteBlock, false,
             false);
 
     private ImageView imv;
 
-    private int posX = getBreiteBlock();
-    private int posY = getHoeheBlock() * 7 - 1;
-    private int beschleunigungX = 0;
-    private double beschleunigungY = 2;
-
     private int anfangKarte = 0;
     private int anzahlBloecke = 100;
-    private int mitschiebenKarte = 0;
     private int laengeKartenArray;
     private static int zeit = 0;
     private boolean zeitLaeuft = false;
@@ -202,6 +194,8 @@ public class GameViewManager {
                 isUpKeyPressed = true;
             } else if (event.getCode() == KeyCode.DOWN) {
                 isDownKeyPressed = true;
+            } else if(event.getCode() == KeyCode.ESCAPE) {
+                gameStage.close();
             }
         });
 
@@ -228,7 +222,7 @@ public class GameViewManager {
         gameStage = new Stage();
         gameStage.setFullScreen(true);
         gameStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        gameStage.setResizable(true);
+        gameStage.setResizable(false);
         gameStage.setScene(gameScene);
 
     }
@@ -499,14 +493,6 @@ public class GameViewManager {
         return anfangKarte;
     }
 
-    public void setBeschleunigungX(int beschleunigungX) {
-        this.beschleunigungX = beschleunigungX;
-    }
-
-    public void setBeschleunigungY(double beschleunigungY) {
-        this.beschleunigungY = beschleunigungY;
-    }
-
     public void setZeit(int zeit) {
         GameViewManager.zeit = zeit;
     }
@@ -535,22 +521,6 @@ public class GameViewManager {
         return zeitLaeuft;
     }
 
-//    public Image getBildTrollface() {
-//        return bildTrollface;
-//    }
-//
-//    public void setBildNachthimmelSolid(Image bildNachthimmelSolid) {
-//        this.bildNachthimmelSolid = bildNachthimmelSolid;
-//    }
-//
-//    public Image getBildNachthimmel() {
-//        return bildNachthimmel;
-//    }
-
-    public int getMitschiebenKarte() {
-        return mitschiebenKarte;
-    }
-
     public int getHoeheBlock() {
         return hoeheBlock;
     }
@@ -571,14 +541,6 @@ public class GameViewManager {
         return anzahlBloecke;
     }
 
-    public int getPosX() {
-        return posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
     public Karte getKarte() {
         return karte;
     }
@@ -591,28 +553,8 @@ public class GameViewManager {
         return laengeKartenArray;
     }
 
-    public int getBeschleunigungX() {
-        return beschleunigungX;
-    }
-
-    public double getBeschleunigungY() {
-        return beschleunigungY;
-    }
-
     public double getGeschwindigkeit() {
         return geschwindigkeit;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
-    public void setMitschiebenKarte(int mitschiebenKarte) {
-        this.mitschiebenKarte = mitschiebenKarte;
     }
 
     public void setAnfangKarte(int anfangKarte) {

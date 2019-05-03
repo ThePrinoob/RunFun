@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -17,7 +18,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
@@ -33,36 +33,20 @@ import net.ictcampus.RunFun.model.RunFunButton;
 import net.ictcampus.RunFun.model.RunFunSubScene;
 
 public class ViewManager {
-    private static final int WIDTH = 1040, HEIGHT = 700;
-    private final static int MENU_BUTTONS_START_X = 450;
-    private final static int MENU_BUTTONS_START_Y = 250;
-
+    private int WIDTH = 1040, HEIGHT = 700;
+    private int MENU_BUTTONS_START_X = 450;
+    private int MENU_BUTTONS_START_Y = 250;
     private AnchorPane mainPane;
     private Stage mainStage;
     private Scene mainScene;
-
     private RunFunSubScene highscoreSubScene;
     private RunFunSubScene characterChooserScene;
     private RunFunSubScene creditsSubScene;
-
     private RunFunSubScene sceneToHide;
-
-    private AudioClip bangClip;
-
-    // private RunFunSubScene creditsSubScene;
-
-//    String hitNormal = ("choose_your_character.mp3");
-//    Media sound = new Media(new File(hitNormal).toURI().toString());
-//    MediaPlayer mediaPlayer = new MediaPlayer(sound);
-
-    List<RunFunButton> menuButtons;
-
-    List<CharacterPicker> characterList;
+    private List<RunFunButton> menuButtons;
+    private List<CharacterPicker> characterList;
     private CHARACTER choosenCharacter;
-
-    public String username;
-    // Audio
-//    private AudioPlayer chooseYourCharacter;
+    private String username;
 
     public ViewManager() {
         menuButtons = new ArrayList<>();
@@ -185,10 +169,6 @@ public class ViewManager {
             }
         });
         return startButton;
-    }
-
-    public Stage getMainStage() {
-        return mainStage;
     }
 
     private void addMenuButton(RunFunButton button) {
@@ -332,20 +312,16 @@ public class ViewManager {
         mainPane.setBackground(new Background(background));
     }
 
-    public AudioClip getBangClip() {
-        return bangClip;
-    }
-
-    public void setBangClip(AudioClip bangClip) {
-        this.bangClip = bangClip;
-    }
-
     public TextField getName() {
         return name;
     }
 
     public void setName(TextField name) {
         this.name = name;
+    }
+
+    public Stage getMainStage() {
+        return mainStage;
     }
 
 }
