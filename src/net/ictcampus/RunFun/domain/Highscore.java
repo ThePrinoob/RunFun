@@ -1,6 +1,5 @@
 package net.ictcampus.RunFun.domain;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import net.ictcampus.RunFun.javaDB.*;
 
 public class Highscore {
 
-    private int podest =1;
+    private int podest = 1;
 
     public void ausgebenRangliste(Label name, Label punkte) {
         // Liste mit den Personen

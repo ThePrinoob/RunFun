@@ -15,75 +15,77 @@ import javafx.util.Duration;
 
 public class RunFunSubScene extends SubScene {
 
-	private final static String BACKGROUND_IMAGE = "/src/net/ictcampus/RunFun/model/resources/orange_panel.png";
+    private String BACKGROUND_IMAGE = "resources/orange_panel.png";
 
 //    private boolean isHidden;
 
-	private boolean isHidden;
+    private boolean isHidden;
 
-	public RunFunSubScene() {
+    public RunFunSubScene() {
 
-		super(new AnchorPane(), 1000, 600);
-		prefWidth(1000);
-		prefHeight(600);
+        super(new AnchorPane(), 1000, 600);
+        prefWidth(1000);
+        prefHeight(600);
 
-		BackgroundImage image = new BackgroundImage(new Image(BACKGROUND_IMAGE, 1000, 600, false, true),
-				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        BackgroundImage image = new BackgroundImage(
+                new Image(getClass().getResourceAsStream(BACKGROUND_IMAGE), 1000, 600, false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                null);
 
-		AnchorPane root2 = (AnchorPane) this.getRoot();
-		root2.setBackground(new Background(image));
-		root2.getChildren().add(createCloseButton());
+        AnchorPane root2 = (AnchorPane) this.getRoot();
+        root2.setBackground(new Background(image));
+        root2.getChildren().add(createCloseButton());
 
-		isHidden = true;
-		setLayoutX(1080);
-		setLayoutY(100);
+        isHidden = true;
+        setLayoutX(1080);
+        setLayoutY(100);
 
-	}
+    }
 
-	public void moveSubScene() {
-		TranslateTransition transition = new TranslateTransition();
-		transition.setDuration(Duration.seconds(0.4));
-		transition.setNode(this);
+    public void moveSubScene() {
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(0.4));
+        transition.setNode(this);
 
-		if (isHidden) {
-			transition.setToX(-1040);
-			isHidden = false;
-		} else {
-			transition.setToX(0);
-			isHidden = true;
-		}
+        if (isHidden) {
+            transition.setToX(-1040);
+            isHidden = false;
+        } else {
+            transition.setToX(0);
+            isHidden = true;
+        }
 
-		transition.play();
+        transition.play();
 
-	}
+    }
 
-	public void moveCloseButton() {
-		TranslateTransition transition = new TranslateTransition();
-		transition.setDuration(Duration.seconds(0.4));
-		transition.setNode(this);
-		transition.setToX(0);
-		transition.play();
+    public void moveCloseButton() {
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(0.4));
+        transition.setNode(this);
+        transition.setToX(0);
+        transition.play();
 
-	}
+    }
 
-	private RunFunCloseButton createCloseButton() {
-		RunFunCloseButton closeButton = new RunFunCloseButton();
-		closeButton.setLayoutX(40);
-		closeButton.setLayoutY(30);
+    private RunFunCloseButton createCloseButton() {
+        RunFunCloseButton closeButton = new RunFunCloseButton();
+        closeButton.setLayoutX(40);
+        closeButton.setLayoutY(30);
 
-		closeButton.setOnAction(new EventHandler<ActionEvent>() {
+        closeButton.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
+            @Override
+            public void handle(ActionEvent event) {
 
-				moveCloseButton();
-			}
-		});
-		return closeButton;
-	}
+                moveCloseButton();
+            }
+        });
+        return closeButton;
+    }
 
-	public AnchorPane getPane() {
-		return (AnchorPane) this.getRoot();
-	}
+    public AnchorPane getPane() {
+        return (AnchorPane) this.getRoot();
+    }
 
 }

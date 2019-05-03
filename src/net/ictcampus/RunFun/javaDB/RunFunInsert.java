@@ -6,20 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class RunFunInsert implements InsertPlayer {
 
     // Instanzvariablen
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-   
-    
+
     @Override
     public boolean insertPlayerDB(String name, String zeit) {
         // SQL Querie
         String insert = "Insert into highscore (username, time, map_id) values (?,?,?);";
-        
+
         try {
             // Verbindung aufbauen
             con = openConnection();

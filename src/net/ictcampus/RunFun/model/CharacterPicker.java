@@ -11,15 +11,16 @@ public class CharacterPicker extends VBox {
     private ImageView circleImage;
     private ImageView characterImage;
 
-    private String circleNotChoosen = "view/resources/characterchooser/grey_circle.png";
-    private String circleChoosen = "view/resources/characterchooser/red_boxTick.png";
+    private String circleNotChoosen = "resources/characterchooser/grey_circle.png";
+    private String circleChoosen = "resources/characterchooser/red_boxTick.png";
 
     private CHARACTER character;
     private boolean isCircleChoosen;
 
     public CharacterPicker(CHARACTER character) {
-        circleImage = new ImageView(circleNotChoosen);
-        characterImage = new ImageView(character.getUrl());
+        circleImage = new ImageView(new Image(getClass().getResourceAsStream(circleNotChoosen)));
+        characterImage = new ImageView(
+                new Image(getClass().getResourceAsStream(character.getUrl())));
         this.character = character;
         isCircleChoosen = false;
         this.setLayoutX(260);
@@ -42,7 +43,7 @@ public class CharacterPicker extends VBox {
     public void setIsCircleChoosen(boolean isCircleChoosen) {
         this.isCircleChoosen = isCircleChoosen;
         String imageToSet = this.isCircleChoosen ? circleChoosen : circleNotChoosen;
-        circleImage.setImage(new Image(imageToSet));
+        circleImage.setImage(new Image(getClass().getResourceAsStream(imageToSet)));
     }
 
 }

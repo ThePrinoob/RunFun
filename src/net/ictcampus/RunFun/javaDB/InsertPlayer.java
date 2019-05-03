@@ -1,15 +1,14 @@
 package net.ictcampus.RunFun.javaDB;
 
+import java.util.List;
 
-    import java.util.List;
+public interface InsertPlayer {
+    // Methode, um die Spieler anhand des Namens zu finden
 
-    public interface InsertPlayer {
-        //Methode, um die Spieler anhand des Namens zu finden
+    public List<Player> selectPlayerDB();
 
-            public List<Player> selectPlayerDB();
+    public boolean insertPlayerDB(String name, String zeit);
 
-            public boolean insertPlayerDB(String name, String zeit);
+    public boolean updatePlayerDB(String name, int maxPunkte);
 
-            public boolean updatePlayerDB(String name, int maxPunkte);
-            
 }

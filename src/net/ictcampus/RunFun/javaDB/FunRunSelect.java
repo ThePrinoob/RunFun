@@ -1,4 +1,5 @@
 package net.ictcampus.RunFun.javaDB;
+
 //imports
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class FunRunSelect {
 
-    
- // Instanzvariablen
+    // Instanzvariablen
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -37,7 +36,7 @@ public class FunRunSelect {
                 String benutzername = rs.getString("username");
                 String zeit = rs.getString("time");
                 allPersonen.add(new Player(benutzername, zeit));
-                
+
             }
             // Verbindugn schliessen
             closeConnection();
@@ -80,8 +79,7 @@ public class FunRunSelect {
         player = select.selectPlayerDB();
         // Ausgeben der ausgelesenen Spieler
         for (Player p : player) {
-            System.out
-                    .println( p.getBenutzername() + p.getTime());
+            System.out.println(p.getBenutzername() + p.getTime());
         }
     }
 }

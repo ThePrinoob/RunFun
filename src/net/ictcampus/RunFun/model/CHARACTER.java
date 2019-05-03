@@ -2,10 +2,10 @@ package net.ictcampus.RunFun.model;
 
 public enum CHARACTER {
 
-    PANDA("view/resources/characterchooser/panda.png"),
-    COW("view/resources/characterchooser/cow.png"),
-    WALRUS("view/resources/characterchooser/walrus.png"),
-    MONKEY("view/resources/characterchooser/monkey.png");
+    PANDA("/net/ictcampus/RunFun/model/resources/characterchooser/panda.png"),
+    COW("/net/ictcampus/RunFun/model/resources/characterchooser/cow.png"),
+    WALRUS("/net/ictcampus/RunFun/model/resources/characterchooser/walrus.png"),
+    MONKEY("/net/ictcampus/RunFun/model/resources/characterchooser/monkey.png");
 
     private String urlCharacter;
 

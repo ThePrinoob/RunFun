@@ -17,9 +17,8 @@ import javafx.scene.text.Font;
 
 public class InfoLabel extends Label {
 
-    public final static String FONT_PATH = "src/model/resources/kenvector_future.ttf";
-
-    public final static String BACKGROUND_IMAGE = "view/resources/red_button10.png";
+    public final static String FONT_PATH = "src/net/ictcampus/RunFun/model/resources/kenvector_future.ttf";
+    public final static String BACKGROUND_IMAGE = "resources/red_button10.png";
 
     public InfoLabel(String text) {
 
@@ -32,8 +31,9 @@ public class InfoLabel extends Label {
         setAlignment(Pos.CENTER);
 
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image(BACKGROUND_IMAGE, 500, 49, false, true), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+                new Image(getClass().getResourceAsStream(BACKGROUND_IMAGE), 500, 49, false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                null);
 
         setBackground(new Background(backgroundImage));
 
