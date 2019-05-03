@@ -22,7 +22,6 @@ public class RunFunSubScene extends SubScene {
     private boolean isHidden;
 
     public RunFunSubScene() {
-
         super(new AnchorPane(), 1000, 600);
         prefWidth(1000);
         prefHeight(600);
@@ -77,7 +76,6 @@ public class RunFunSubScene extends SubScene {
 
             @Override
             public void handle(ActionEvent event) {
-
                 moveCloseButton();
             }
         });

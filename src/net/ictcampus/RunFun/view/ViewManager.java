@@ -138,7 +138,7 @@ public class ViewManager {
         startButton.setLayoutX(400);
         startButton.setLayoutY(500);
 
-        name.setPromptText("Gebe deinen Namen ein");
+        name.setPromptText("Gib deinen Namen ein");
         name.setLayoutX(260);
         name.setLayoutY(100);
         name.setPrefSize(500, 50);

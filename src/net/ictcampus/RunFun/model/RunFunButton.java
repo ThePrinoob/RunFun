@@ -9,9 +9,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
 
 public class RunFunButton extends Button {
-    private final String FONT_PATH = "src/net/ictcampus/RunFun/model/resources/kenvector_future.ttf";
-    private final String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/orange_button_pressed.png')";
-    private final String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/orange_button.png')";
+    private String FONT_PATH = "src/net/ictcampus/RunFun/model/resources/kenvector_future.ttf";
+    private String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/orange_button_pressed.png')";
+    private String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/orange_button.png')";
 
     public RunFunButton(String text) {
         setText(text);
