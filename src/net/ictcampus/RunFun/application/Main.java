@@ -10,6 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            //ViewManager starten
             ViewManager manager = new ViewManager();
             primaryStage = manager.getMainStage();
             primaryStage.show();

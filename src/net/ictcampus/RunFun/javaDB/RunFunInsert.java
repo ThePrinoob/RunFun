@@ -9,11 +9,12 @@ import java.util.List;
 
 public class RunFunInsert implements InsertPlayer {
 
-    // Instanzvariablen
+    // ~~~ Instanzvariablen ~~~
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
 
+    // ~~~ Methoden ~~~
     @Override
     public boolean insertPlayerDB(String name, String zeit) {
         // SQL Querie

@@ -10,8 +10,10 @@ import net.ictcampus.RunFun.javaDB.*;
 
 public class Highscore {
 
+    // ~~~ Instanzvariabeln ~~~
     private int podest = 1;
 
+    // ~~~ Methoden ~~~
     public void ausgebenRangliste(Label name, Label punkte) {
         // Liste mit den Personen
         List<Player> person = new ArrayList<>();

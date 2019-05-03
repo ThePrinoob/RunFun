@@ -15,11 +15,18 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.text.Font;
 
+/**
+ * zweites InfoLabel für Hauptemenu
+ * @author ingoldd, leuenbergermik
+ *
+ */
 public class InfoLabel2 extends Label {
 
+    // ~~~ Instanzvariabeln ~~~
     public final static String FONT_PATH = "src/net/ictcampus/RunFun/model/resources/kenvector_future.ttf";
     public final static String BACKGROUND_IMAGE = "resources/red_button01.png";
 
+    // ~~~ Konstruktor ~~~
     public InfoLabel2(String text) {
 
         setPrefWidth(500);
@@ -38,6 +45,7 @@ public class InfoLabel2 extends Label {
 
     }
 
+    // ~~~ Methoden ~~~
     private void setLabelFont() {
 
         try {

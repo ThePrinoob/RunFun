@@ -21,9 +21,11 @@ import javafx.util.Duration;
  */
 public class RunFunSubScene extends SubScene {
 
+    // ~~~ Instanzvariabeln ~~~
     private String BACKGROUND_IMAGE = "resources/orange_panel.png";
     private boolean isHidden;
 
+    // ~~~ Konstruktor ~~~
     public RunFunSubScene() {
         super(new AnchorPane(), 1000, 600);
         prefWidth(1000);
@@ -43,6 +45,7 @@ public class RunFunSubScene extends SubScene {
 
     }
 
+    // ~~~ Methoden ~~~
     public void moveSubScene() {
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(0.4));
@@ -84,6 +87,7 @@ public class RunFunSubScene extends SubScene {
         return closeButton;
     }
 
+    // ~~~ Getter && Setter ~~~
     public AnchorPane getPane() {
         return (AnchorPane) this.getRoot();
     }

@@ -91,9 +91,8 @@ public class GameViewManager {
     private Image bildTreppeLinksOben = new Image(
             getClass().getResourceAsStream("resources/tiles/runfun_links_oben.png"), hoeheBlock,
             breiteBlock, false, false);
-
+    
     private ImageView imv;
-
     private int anfangKarte = 0;
     private int anzahlBloecke = 100;
     private int laengeKartenArray;
@@ -103,7 +102,7 @@ public class GameViewManager {
     private boolean zielErreicht;
     private String username;
 
-    // ~~~ Methoden ~~~
+    // ~~~ Konstruktor ~~~
     public GameViewManager() {
         setKarte(new Karte());
         initializeStage();
@@ -111,6 +110,8 @@ public class GameViewManager {
         buildMap();
     }
 
+    // ~~~ Methoden ~~~
+    
     /**
      * Map erstellen und Blöcke anzeigen
      */
@@ -398,7 +399,7 @@ public class GameViewManager {
      */
     private void jumpCharacter() {
         if (!isWaiting) {
-            //ist up Key gedrückt
+            // ist up Key gedrückt
             if (isUpKeyPressed && !isDownKeyPressed) {
                 this.setIsWaiting(true);
                 character.setLayoutY(character.getLayoutY() - 125);

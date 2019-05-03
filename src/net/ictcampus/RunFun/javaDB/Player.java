@@ -1,17 +1,17 @@
 package net.ictcampus.RunFun.javaDB;
 
 public class Player {
-    // Instanzvariabeln
+    // ~~~ Instanzvariabeln ~~~ 
     private String benutzername;
     private String time;
 
-    // Konstruktor
+    // ~~~ Konstruktor ~~~
     public Player(String benutzername, String zeit) {
         this.setBenutzername(benutzername);
         this.setTime(zeit);
     }
 
-    // Getter und Setter
+    // ~~~ Getter && Setter ~~~
     public String getBenutzername() {
         return benutzername;
     }

@@ -10,11 +10,12 @@ import java.util.List;
 
 public class FunRunSelect {
 
-    // Instanzvariablen
+    // ~~~ Instanzvariabeln ~~~
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
 
+    // ~~~ Methoden ~~~
     public List<Player> selectPlayerDB() {
         List<Player> allPersonen = new ArrayList<>();
 

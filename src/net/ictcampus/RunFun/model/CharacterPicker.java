@@ -6,17 +6,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+/**
+ * Charakter auswählen
+ * @author ingoldd, leunbergermik
+ *
+ */
 public class CharacterPicker extends VBox {
 
+    // ~~~ Instanzvariabeln ~~~
     private ImageView circleImage;
     private ImageView characterImage;
-
     private String circleNotChoosen = "resources/characterchooser/grey_circle.png";
     private String circleChoosen = "resources/characterchooser/red_boxTick.png";
-
     private CHARACTER character;
     private boolean isCircleChoosen;
 
+    // ~~~ Konstruktor ~~~
     public CharacterPicker(CHARACTER character) {
         circleImage = new ImageView(new Image(getClass().getResourceAsStream(circleNotChoosen)));
         characterImage = new ImageView(
@@ -32,6 +37,7 @@ public class CharacterPicker extends VBox {
 
     }
 
+    // ~~~ Getter && Setter ~~~
     public CHARACTER getCharacter() {
         return character;
     }

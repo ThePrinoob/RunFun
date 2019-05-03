@@ -31,8 +31,15 @@ import net.ictcampus.RunFun.model.InfoLabel;
 import net.ictcampus.RunFun.model.InfoLabel2;
 import net.ictcampus.RunFun.model.RunFunButton;
 import net.ictcampus.RunFun.model.RunFunSubScene;
+/**
+ * Hauptmenu anzeigen und verwalten
+ * @author ingoldd, leuenbergermik
+ *
+ */
 
 public class ViewManager {
+    
+    // ~~~ Instanzvariabeln ~~~
     private int WIDTH = 1040, HEIGHT = 700;
     private int MENU_BUTTONS_START_X = 450;
     private int MENU_BUTTONS_START_Y = 250;
@@ -46,6 +53,7 @@ public class ViewManager {
     private List<RunFunButton> menuButtons;
     private List<CharacterPicker> characterList;
     private CHARACTER choosenCharacter;
+    private TextField name = new TextField("");
     private String username;
 
     // ~~~ Konstruktor ~~~
@@ -116,8 +124,6 @@ public class ViewManager {
         box.setLayoutY(250);
         return box;
     }
-
-    TextField name = new TextField("");
 
     public RunFunButton createButtonToStart() {
         RunFunButton startButton = new RunFunButton("Start");

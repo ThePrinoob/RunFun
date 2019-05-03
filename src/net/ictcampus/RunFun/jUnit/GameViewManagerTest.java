@@ -9,6 +9,7 @@ import net.ictcampus.RunFun.javaDB.RunFunInsert;
 
 /**
  * GameViewManager Test (Like the Name already told you)
+ * Leider keine Zeit mehr gehabt, hier wäre aber die Datei :)
  * 
  * @author ingoldd, leuenbergermik
  * 

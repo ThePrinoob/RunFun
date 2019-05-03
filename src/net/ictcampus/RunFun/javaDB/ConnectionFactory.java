@@ -7,18 +7,20 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
+    // ~~~ Instanzvariabeln ~~~
     private String dbUrl;
     private String dbUser;
     private String dbPwd;
-
     private static ConnectionFactory connectionFactory;
 
+    // ~~~ Konstruktor ~~~
     private ConnectionFactory(String url, String user, String pwd) {
         dbUrl = url;
         dbUser = user;
         dbPwd = pwd;
     }
-
+    
+    // ~~~ Methoden ~~~
     public static ConnectionFactory getInstance() {
         if (connectionFactory == null) {
 
@@ -33,7 +35,8 @@ public class ConnectionFactory {
         conn = DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPwd());
         return conn;
     }
-
+    
+    // ~~~ Getter && Setter ~~~
     public String getDbUrl() {
         return dbUrl;
     }

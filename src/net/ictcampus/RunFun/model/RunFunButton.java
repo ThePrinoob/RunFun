@@ -9,11 +9,20 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
 
+/**
+ * Hauptmenu Buttons
+ * @author ingoldd, leuenbergermik
+ *
+ */
 public class RunFunButton extends Button {
+    
+    // ~~~ Instanzvariabeln ~~~
+    
     private String FONT_PATH = "src/net/ictcampus/RunFun/model/resources/kenvector_future.ttf";
     private String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/orange_button_pressed.png')";
     private String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/orange_button.png')";
 
+    // ~~~ Konstruktor ~~~
     public RunFunButton(String text) {
         setText(text);
         setButtonFont();
@@ -23,6 +32,7 @@ public class RunFunButton extends Button {
         initializeButtonListeners();
     }
 
+    // ~~~ Methoden ~~~
     public void setButtonFont() {
         try {
             setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));

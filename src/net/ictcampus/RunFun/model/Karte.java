@@ -12,21 +12,21 @@ import java.util.List;
  * Hier wird die Karte vom Textfile eingelesen und in eine Array Liste
  * gespeichert.
  * 
- * @author housi, mrk., peschä
+ * @author ingoldd, leuenbergermik
  *
  */
 public class Karte {
 
-    // -----------INSTANZVARIABLEN------------
+    // ~~~ Instanzvariabeln ~~~
     private List<String[]> karteListe = new ArrayList<String[]>();
     private int laengeKarte;
 
-    // --------------KONSTRUKTOR--------------
+    //  ~~~ Konstruktor ~~~
     public Karte() {
         karteEinlesen();
     }
 
-    // ---------------METHODEN----------------
+    // ~~~ Methoden ~~~
     /**
      * Liest Karte aus Textfile ein und speichert diese in die Array Liste.
      */
@@ -58,7 +58,7 @@ public class Karte {
         }
     }
 
-    // ------------GETTER & SETTER------------
+    // ~~~ Getter && Setter ~~~
     public int getLaengeKarte() {
         return laengeKarte;
     }
