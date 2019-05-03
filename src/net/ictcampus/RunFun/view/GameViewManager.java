@@ -59,29 +59,39 @@ public class GameViewManager {
 
     // Map images
     private Image bildAbschraegungLinks = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"), hoeheBlock,
-            breiteBlock, false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_abschraegung_links.png"),
+            hoeheBlock, breiteBlock, false, false);
     private Image bildErdeOben = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"), hoeheBlock, breiteBlock,
-            false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_oben.png"), hoeheBlock,
+            breiteBlock, false, false);
     private Image bildErdeRechts = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"), hoeheBlock, breiteBlock,
-            false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_rechts.png"), hoeheBlock,
+            breiteBlock, false, false);
     private Image bildErde = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_erde.png"), hoeheBlock, breiteBlock, false,
-            false);
+            getClass().getResourceAsStream("resources/tiles/runfun_erde.png"), hoeheBlock,
+            breiteBlock, false, false);
     private Image bildPunktRechtsOben = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"), hoeheBlock, breiteBlock,
-            false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_ecke_rechtsoben.png"),
+            hoeheBlock, breiteBlock, false, false);
+    private Image bildPunktLinksOben = new Image(
+            getClass().getResourceAsStream("resources/tiles/runfun_ecke_linksoben.png"), hoeheBlock,
+            breiteBlock, false, false);
+
     private Image bildRutscheUnten = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"), hoeheBlock, breiteBlock,
-            false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_unten.png"), hoeheBlock,
+            breiteBlock, false, false);
+    private Image bildRutscheHoch = new Image(
+            getClass().getResourceAsStream("resources/tiles/runfun_rutsche_hoch.png"), hoeheBlock,
+            breiteBlock, false, false);
     private Image bildErdeLinks = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"), hoeheBlock, breiteBlock,
-            false, false);
+            getClass().getResourceAsStream("resources/tiles/runfun_grass_links.png"), hoeheBlock,
+            breiteBlock, false, false);
     private Image bildZiel = new Image(
-            getClass().getResourceAsStream("resources/tiles/runfun_ziel.png"), hoeheBlock, breiteBlock, false,
-            false);
+            getClass().getResourceAsStream("resources/tiles/runfun_ziel.png"), hoeheBlock,
+            breiteBlock, false, false);
+    private Image bildTreppeLinksOben = new Image(
+            getClass().getResourceAsStream("resources/tiles/runfun_links_oben.png"), hoeheBlock,
+            breiteBlock, false, false);
 
     private ImageView imv;
 
@@ -136,6 +146,11 @@ public class GameViewManager {
                         case "132":
                             imv = new ImageView(bildPunktRechtsOben);
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 132;
+                            break;
+                        case "134":
+                            imv = new ImageView(bildPunktLinksOben);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
                             blocks[spaltenNummer][zeilenNummer] = 145;
                             break;
                         case "154":
@@ -148,6 +163,11 @@ public class GameViewManager {
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
                             blocks[spaltenNummer][zeilenNummer] = 133;
                             break;
+                        case "174":
+                            imv = new ImageView(bildRutscheHoch);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 174;
+                            break;
                         case "138":
                             imv = new ImageView(bildErdeLinks);
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
@@ -157,6 +177,11 @@ public class GameViewManager {
                             imv = new ImageView(bildZiel);
                             gamePane.add(imv, zeilenNummer, spaltenNummer);
                             blocks[spaltenNummer][zeilenNummer] = 150;
+                            break;
+                        case "166":
+                            imv = new ImageView(bildTreppeLinksOben);
+                            gamePane.add(imv, zeilenNummer, spaltenNummer);
+                            blocks[spaltenNummer][zeilenNummer] = 166;
                             break;
 
                         // Blöcke Decko
@@ -194,7 +219,7 @@ public class GameViewManager {
                 isUpKeyPressed = true;
             } else if (event.getCode() == KeyCode.DOWN) {
                 isDownKeyPressed = true;
-            } else if(event.getCode() == KeyCode.ESCAPE) {
+            } else if (event.getCode() == KeyCode.ESCAPE) {
                 gameStage.close();
             }
         });
@@ -314,8 +339,10 @@ public class GameViewManager {
             if (blocks[row][column + 1] == 150) {
                 zielErreicht = true;
                 RunFunInsert dao = new RunFunInsert();
+                //Funktioniert nicht richtig
                 String finishTime = (getZeit() / 100 / 60) + ":" + ((getZeit() / 100) % 60) + "."
                         + (getZeit() % 100) / 10;
+                
                 dao.insertPlayerDB(username, finishTime);
             } else if (blocks[row + 1][column] != 154
                     || blocks[row + 1][column] != 133 && blocks[row][column + 1] == 000) {
@@ -324,8 +351,8 @@ public class GameViewManager {
                             + (character.getBoundsInLocal().getWidth()) / 4) / 125);
                     row = (int) (character.getLayoutY() / 125);
                     if (row + i < 10 && !foundGround) {
-                        if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133) {
-                            if (blocks[row + 1][column] == 154 || blocks[row + 1][column] == 133) {
+                        if (blocks[row + i][column] == 154 || blocks[row + i][column] == 133 || blocks[row + 1][column] == 174) {
+                            if (blocks[row + 1][column] == 154 || blocks[row + 1][column] == 133 || blocks[row + 1][column] == 174) {
                                 foundGround = true;
                             } else {
                                 if (!isWaiting) {
@@ -335,7 +362,11 @@ public class GameViewManager {
                         }
                     }
                 }
-
+                // Garage
+                // || blocks[row + 1][column] != 174
+                //|| blocks[row + 1][column] == 174
+                //  || blocks[row + 1][column] == 174
+                
                 // Map bewegen
                 if (character.getLayoutX() + 1 >= (stackPane.getWidth() / 2)) {
                     gamePane.setLayoutX(gamePane.getLayoutX() - getGeschwindigkeit());
@@ -378,7 +409,7 @@ public class GameViewManager {
     }
 
     /**
-     * Character sneaken lassen 
+     * Character sneaken lassen
      */
     private void sneakCharacter() {
         if (!isWaiting) {
@@ -387,7 +418,7 @@ public class GameViewManager {
                 // Character halb so gross
                 character.setFitHeight(62.5);
                 character.setLayoutY(character.getLayoutY() + 62.5);
-                angle=-30;
+                angle = -30;
                 character.setRotate(angle);
                 // macht einen Delay, dass er nicht ganz schnell nachinander springen kann.
                 PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
@@ -403,7 +434,6 @@ public class GameViewManager {
             }
         }
     }
-
 
     /**
      * Hintergrund erstellen
