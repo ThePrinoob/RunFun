@@ -6,7 +6,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 
 public class RunFunCloseButton extends Button {
-    private final String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/grey_boxCross.png')";
+    private final String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('net/ictcampus/RunFun/model/resources/grey_boxCross.png')";
 
     public RunFunCloseButton() {
         setPrefWidth(35);

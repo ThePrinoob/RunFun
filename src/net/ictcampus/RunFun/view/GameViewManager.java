@@ -393,7 +393,7 @@ public class GameViewManager {
                 // Character halb so gross
                 character.setFitHeight(62.5);
                 character.setLayoutY(character.getLayoutY() + 62.5);
-                angle=0;
+                angle=-30;
                 character.setRotate(angle);
                 // macht einen Delay, dass er nicht ganz schnell nachinander springen kann.
                 PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
