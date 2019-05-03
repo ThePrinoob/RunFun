@@ -34,7 +34,7 @@ public class Karte {
         FileReader fileRead;
         String zeile = null;
         try {
-            fileRead = new FileReader("./assets/lel.txt");
+            fileRead = new FileReader("./assets/map.txt");
             bufRead = new BufferedReader(fileRead);
             // Zeile für Zeile einlesen
             while ((zeile = bufRead.readLine()) != null) {
